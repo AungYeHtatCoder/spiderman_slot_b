@@ -58,9 +58,9 @@ const Navbar = () => {
         <img  className='logo' src={logo} />
         </div>
         <div className=''>
-            {/* <div className="dropdown d-inline me-3">
-              <a className="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
+            <div className="dropstart d-inline me-3">
+              <a className="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i className="fas fa-wallet text-white" style={{ fontSize: "20px" }}></i>
               </a>
 
               <ul className="dropdown-menu">
@@ -68,10 +68,10 @@ const Navbar = () => {
                 <li><a className="dropdown-item" href="#">Another action</a></li>
                 <li><a className="dropdown-item" href="#">Something else here</a></li>
               </ul>
-            </div> */}
-          <Link className='text-decoration-none text-white me-2'>
-            
-            <i className="fa-regular fa-user-circle"></i>
+            </div>
+          <Link className='text-decoration-none text-white me-4'>
+
+            {!authUser.userData.profile && <i className="fa-regular fa-user-circle" style={{ fontSize: "20px" }}></i>}
           </Link>
           <button className="loginBtn" onClick={logOut}>
             {loading && <BtnSpinner />}
