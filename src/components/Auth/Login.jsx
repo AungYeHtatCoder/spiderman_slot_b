@@ -3,6 +3,7 @@ import './Login.css'
 import logo from  '../../assets/img/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import BASE_URL from '../../hooks/baseURL'
+import BtnSpinner from './BtnSpinner'
 
 
 export default function Login() {
@@ -17,12 +18,15 @@ export default function Login() {
 
     const [eye, setEye] = useState(false);
     const [data, setData] = useState([]);
+    const [error, setError] = useState({});
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [loading, setLoading] = useState(false);
 
+    //login api calling
     const logIn = (e) =>{
         e.preventDefault();
+        
         const loginData = {
             phone: phone,
             password: password
@@ -37,11 +41,12 @@ export default function Login() {
             body: JSON.stringify(loginData)
         }).then(response => {
             if (!response.ok) {
-              throw new Error('Login failed');
+              throw new Error('Log In Failed');
             }
             return response.json();
         })
         .then(data => {
+            
             // console.log('Login successful:', data);
             setData(data);
             if (data) {
@@ -50,7 +55,7 @@ export default function Login() {
                 localStorage.setItem('authUser', JSON.stringify({
                     userData
                 }));
-                // alert("Logged In Successfully.");
+                setLoading(false)
                 //redirect to home page
                 navigate('/');
             } else {
@@ -58,9 +63,9 @@ export default function Login() {
             }
         })
         .catch(error => {
-            console.error('Login error:', error);
+            console.error(error);
         });
-      }
+    }
 
   return (
     <>
@@ -81,6 +86,7 @@ export default function Login() {
                             <div className="mb-3">
                                 <label htmlFor="phone" className="form-label">Phone</label>
                                 <input type="number" className="form-control" id="phone" placeholder='Enter Phone' onChange={(e)=>setPhone(e.target.value)} />
+                                {error.phone && <div className="error text-danger">{error.phone}</div>}
                             </div>
                             <div className="mb-3 password">
                                 <label htmlFor="password" className="form-label">Password</label>
@@ -88,7 +94,10 @@ export default function Login() {
                                 <i className={`fas eye ${eye ? 'fa-eye-slash' : 'fa-eye'}`} onClick={() => setEye(!eye)}></i>
                             </div>
                             <div className="my-4">
-                                <button className="btn btn-red w-100 shadow py-2">Login</button>
+                                <button className="btn btn-red w-100 shadow py-2" onClick={()=>setLoading(true)}>
+                                    {loading && <BtnSpinner/>}
+                                    Login
+                                </button>
                             </div>
                         </form>
                     </div>
