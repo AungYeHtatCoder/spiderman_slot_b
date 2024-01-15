@@ -5,14 +5,14 @@ import { Link, Outlet } from "react-router-dom";
 const CasinoGames = ({ providers, loading }) => {
 
   return (
-    <div className="px-2 px-sm-4">
+    <div className="px-2 px-sm-4 py-4">
       {loading && <BtnSpinner />}
       <div className="row">
         {providers &&
           providers.map((provider, index) => {
             return (
               <div className="col-md-3 col-6 mb-4" key={index}>
-                <Link to={'/games'} onClick={(e)=>{
+                <Link className="text-decoration-none text-white text-center" to={'/games'} onClick={(e)=>{
                   localStorage.removeItem("provider_id");
                   localStorage.removeItem("gameType_id");
                   localStorage.removeItem("title");
@@ -25,6 +25,7 @@ const CasinoGames = ({ providers, loading }) => {
                   className="categoryGame"
                   src={provider.img_url}
                 />
+                <p className="mt-0">{provider.description}</p>
                 </Link>
               </div>
             );
