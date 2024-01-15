@@ -126,48 +126,48 @@ const HomePageGames = () => {
     <div >
       <GameTitle title={'Popular Fishing Games'} />
       <div className="my-4 gamesGrid px-4 ">
-        {fishGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {fishGames.map((game, index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}
       </div>
       <GameTitle title={'Popular Slot Games'} />
       <div className="my-4 gamesGrid px-4 ">
-        {slotGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {slotGames.map((game, index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}
       </div>
       <GameTitle title={'Table Games'} />
       <div className="my-4 gamesGrid px-2 px-sm-4 ">
-        {tableGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {tableGames.map((game, index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}
       </div>
       <GameTitle title={'Popular Live Casino'} />
       <div className="my-4 gamesGrid px-2 px-sm-4 ">
-        {liveGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {liveGames.map((game, index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}
       </div>
       <GameTitle title={'New Games'} />
       <div className="my-4 gamesGrid px-2 px-sm-4 ">
-        {newGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {newGames.map((game, index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}
       </div>
       <GameTitle title={'Popular Arcade Games'} />
       <div className="my-4 gamesGrid px-2 px-sm-4 ">
-        {arcadeGames.map((game)=>{
-            return <div key={game.title} className='game'>
+        {arcadeGames.map((game,index)=>{
+            return <div key={index} className='game'>
                 <img src={game.img} />
             </div>
         })}

@@ -12,8 +12,8 @@ const FishGames = () => {
   return (
     <div className='px-2 px-sm-4'>
       <div className='categoryGames'>
-        {fishes.map((fish)=>{
-          return <img className='categoryGame' src={fish} />
+        {fishes.map((fish, index)=>{
+          return <img key={index} className='categoryGame' src={fish} />
         })}
       </div>
     </div>

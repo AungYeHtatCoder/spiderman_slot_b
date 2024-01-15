@@ -7,6 +7,8 @@ import BtnSpinner from '../Auth/BtnSpinner'
 
 const Navbar = () => {
   let auth = localStorage.getItem('authToken');
+  let authUser = JSON.parse(localStorage.getItem('authUser')).userData;
+  // console.log(authUser.balance);
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
 
@@ -51,11 +53,30 @@ const Navbar = () => {
     )}
     {auth && (
       <div className='navbar d-flex justify-content-between'>
+        <div>
         <img  className='logo' src={logo} />
-        <button className="loginBtn" onClick={logOut}>
-          {loading && <BtnSpinner />}
-          Logout
-        </button>
+        </div>
+        <div className=''>
+            <div class="dropdown d-inline me-3">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+              </a>
+
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          <Link className='text-decoration-none text-white me-2'>
+            
+            <i className="fa-regular fa-user-circle"></i>
+          </Link>
+          <button className="loginBtn" onClick={logOut}>
+            {loading && <BtnSpinner />}
+            Logout
+          </button>
+        </div>
       </div>
     )}
     </>

@@ -71,8 +71,8 @@ const HomeHeroGames = () => {
       <div className='mx-5 py-4 homeGamesContainer'>
       <h1>1,942,245.28</h1>
       <div className="tabs">
-        {tabs.map((tab)=>{
-            return <div onClick={()=>handleGameTab(tab.title)} className={`tab ${activeGameTab===tab.title ? 'activeGameTab' : ''} `}>
+        {tabs.map((tab, index)=>{
+            return <div key={index} onClick={()=>handleGameTab(tab.title)} className={`tab ${activeGameTab===tab.title ? 'activeGameTab' : ''} `}>
                 <img src={tab.img} />
                 <span>{tab.title}</span>
             </div>
@@ -81,8 +81,8 @@ const HomeHeroGames = () => {
     </div>
     <div className=' mx-md-5 py-4'>
       <div className="mb-6 mx-4 mx-md-0  gamesGrid">
-      {activeGameData.map((game)=>{
-        return <div className='game'>
+      {activeGameData.map((game, index)=>{
+        return <div key={index} className='game'>
           <img src={game} />
         </div>
       })}
