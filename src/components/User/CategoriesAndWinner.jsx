@@ -17,9 +17,9 @@ const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
   let [url, setUrl] = useState(BASE_URL + "/providerCodes/" + 2);
   let [url1, setUrl1] = useState(BASE_URL + "/providerCodes/" + 3);
   let [url2, setUrl2] = useState(BASE_URL + "/providerCodes/" + 4);
-  let { data: play } = useFetch(url);
-  let { data: play1 } = useFetch(url1);
-  let { data: play2 } = useFetch(url2);
+  let { data: play, loading, error } = useFetch(url);
+  let { data: play1, loading1, error1 } = useFetch(url1);
+  let { data: play2, loading2, error2 } = useFetch(url2);
   // console.log(play.providers);
   return (
     <div className="categoriesAndWinner">
@@ -32,21 +32,14 @@ const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
         style={{ overflowY: "scroll", overflowX: "hidden" }}
         className="mt-sm-5"
       >
-        {/* <Winner/> */}
-        {/* This is only visible when active categories is Home */}
-        {/* {activeCategory === "Home" && <HomeHeroGames />} */}
-        {/* {activeCategory === "Home" && <HomePageGames />} */}
-        {/* {activeCategory === "Fishing" && <FishGames />} */}
-        {/* {activeCategory === "Arcade" && <ArcadeGames />} */}
-        {/* {activeCategory === "Table" && <TableGames />} */}
         {activeCategory === "LIVE-CASINO" && (
-          <CasinoGames providers={play.providers} />
+          <CasinoGames providers={play.providers} loading={loading} />
         )}
         {activeCategory === "SPORTBOOK" && (
-          <SportGames providers={play1.providers} />
+          <SportGames providers={play1.providers} loading={loading1} />
         )}
         {activeCategory === "SLOTS" && (
-          <SlotGames providers={play2.providers} />
+          <SlotGames providers={play2.providers} loading={loading2} />
         )}
       </div>
     </div>

@@ -20,6 +20,7 @@ export default function Home() {
           setActiveCategory={setActiveCategory}
         />
       </div>
+      
 
       <Footer />
       <Platform />
