@@ -9,6 +9,7 @@ import CasinoGames from './Categories/CasinoGames'
 import ArcadeGames from './Categories/ArcadeGames'
 import SportGames from './Categories/SportGames'
 import TableGames from './Categories/TableGames'
+
 const CategoriesAndWinner = ({activeCategory,setActiveCategory}) => {
   
   return (

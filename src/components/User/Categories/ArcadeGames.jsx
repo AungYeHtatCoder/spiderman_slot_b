@@ -12,8 +12,8 @@ const ArcadeGames = () => {
   return (
     <div className='px-2 px-sm-4'>
       <div className='categoryGames'>
-        {arcades.map((arcade)=>{
-          return <img className='categoryGame' src={arcade} />
+        {arcades.map((arcade, index)=>{
+          return <img key={index} className='categoryGame' src={arcade} />
         })}
       </div>
     </div>
