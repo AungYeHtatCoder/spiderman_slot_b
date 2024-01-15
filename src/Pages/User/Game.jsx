@@ -6,6 +6,7 @@ import BtnSpinner from '../../components/Auth/BtnSpinner';
 import { Link } from 'react-router-dom';
 
 export default function Game() {
+  let [loader, setLoader] = useState(false);
   let providerId = localStorage.getItem('provider_id');
   let gameTypeId = localStorage.getItem('gameType_id');
   let title = localStorage.getItem('title');
@@ -14,6 +15,7 @@ export default function Game() {
   let auth = localStorage.getItem('authToken');
 
   const launchGame = (gameId) => {
+    setLoader(true);
     //fetch api calling
     fetch(BASE_URL + "/launchGame/" + gameId, {
       method: "GET",
@@ -32,6 +34,7 @@ export default function Game() {
     })
     .then((data) => {
       // console.log(data.data);
+      setLoader(false);
       window.location.href = data.data;
     })
     .catch((error) => {
@@ -42,7 +45,10 @@ export default function Game() {
   return (
     <div className='homeBody text-white container-fluid'>
       <Hero />
-        <h1 className='text-center my-4'>{title}</h1>
+        <h1 className='text-center my-4'>
+        {loader && <BtnSpinner />}
+          {title}
+        </h1>
         {
           loading && 
           <div className='text-center'>
@@ -57,7 +63,9 @@ export default function Game() {
                 <>
                 <div onClick={() => launchGame(game.id)} style={{ "cursor" : "pointer" }}>
                   <img src={game.image} className='img-fluid rounded shadow' alt="" />
-                  <p className='text-white mt-3'>{game.name_en}</p>
+                  <p className='text-white mt-3'>
+                    {game.name_en}
+                  </p>
                 </div>
                 </>
               )}
