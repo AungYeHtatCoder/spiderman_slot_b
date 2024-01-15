@@ -1,19 +1,32 @@
 import React from "react";
-import sp1 from "../../../assets/img/categories/sp1.png";
-import sp2 from "../../../assets/img/categories/sp2.png";
-const SportGames = ({ providers }) => {
-  const sports = [sp1, sp2];
+import BtnSpinner from "../../Auth/BtnSpinner";
+import { Link } from "react-router-dom";
+
+const SportGames = ({ providers, loading }) => {
   return (
     <div className="px-2 px-sm-4">
-      <div className="categoryGames">
+      {loading && <BtnSpinner />}
+      <div className="row">
+      
         {providers &&
           providers.map((provider, index) => {
             return (
-              <img
-                key={index}
-                className="categoryGame"
-                src={provider.img_url}
-              />
+              <div className="col-md-3 col-6 mb-4" key={index}>
+                <Link to={'/games'} onClick={(e)=>{
+                  localStorage.removeItem("provider_id");
+                  localStorage.removeItem("gameType_id");
+                  localStorage.removeItem("title");
+                  localStorage.setItem("provider_id", provider.id);
+                  localStorage.setItem("gameType_id", provider.pivot.game_type_id);
+                  localStorage.setItem("title", provider.description);
+                }}>
+                <img
+                  key={index}
+                  className="categoryGame"
+                  src={provider.img_url}
+                />
+                </Link>
+              </div>
             );
           })}
       </div>

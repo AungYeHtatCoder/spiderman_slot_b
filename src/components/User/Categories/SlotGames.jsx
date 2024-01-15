@@ -1,28 +1,32 @@
 import React from "react";
-import s1 from "../../../assets/img/categories/s1.png";
-import s2 from "../../../assets/img/categories/s2.png";
-import s3 from "../../../assets/img/categories/s3.png";
-import s4 from "../../../assets/img/categories/s4.png";
-import s5 from "../../../assets/img/categories/s5.png";
-import s6 from "../../../assets/img/categories/s6.png";
-import s7 from "../../../assets/img/categories/s7.png";
-import s8 from "../../../assets/img/categories/s8.png";
-import s9 from "../../../assets/img/categories/s9.png";
+import BtnSpinner from "../../Auth/BtnSpinner";
+import { Link } from "react-router-dom";
 
-const SlotGames = ({ providers }) => {
-  console.log(providers);
-  const slots = [s1, s2, s3, s4, s5, s6, s7, s8, s9];
+const SlotGames = ({ providers, loading }) => {
   return (
     <div className="px-2 px-sm-4">
-      <div className="categoryGames">
+      {loading && <BtnSpinner />}
+      <div className="row">
+        
         {providers &&
           providers.map((provider, index) => {
             return (
-              <img
-                key={index}
-                className="categoryGame"
-                src={provider.img_url}
-              />
+              <div className="col-md-3 col-6 mb-4" key={index}>
+                <Link to={'/games'} onClick={(e)=>{
+                  localStorage.removeItem("provider_id");
+                  localStorage.removeItem("gameType_id");
+                  localStorage.removeItem("title");
+                  localStorage.setItem("provider_id", provider.id);
+                  localStorage.setItem("gameType_id", provider.pivot.game_type_id);
+                  localStorage.setItem("title", provider.description);
+                }}>
+                <img
+                  key={index}
+                  className="categoryGame"
+                  src={provider.img_url}
+                />
+                </Link>
+              </div>
             );
           })}
       </div>

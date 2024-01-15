@@ -8,24 +8,15 @@ import sport from "../../assets/img/sport.png";
 import table from "../../assets/img/table.png";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
+import { Outlet } from "react-router-dom";
 
 const Categories = ({ activeCategory, setActiveCategory, link }) => {
   let [url, setUrl] = useState(link);
   let btnUrl = BASE_URL + "/gamelist";
   let { data: games } = useFetch(btnUrl);
 
-  // console.log(play);
-  // console.log(activeCategory);
-  // const categories = [
-  //   { title: "Home", img: home },
-  //   { title: "Slots", img: slot },
-  //   { title: "Fishing", img: fish },
-  //   { title: "Casino", img: casino },
-  //   { title: "Arcade", img: arcade },
-  //   { title: "Sports", img: sport },
-  //   { title: "Table", img: table },
-  // ];
   return (
+    <>
     <div className="categories gap-3 d-flex align-items-center justify-content-center">
       {games &&
         games.map((game) => {
@@ -43,7 +34,9 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
             </div>
           );
         })}
+        
     </div>
+    </>
   );
 };
 

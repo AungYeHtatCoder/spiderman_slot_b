@@ -51,7 +51,8 @@ const Navbar = () => {
     <>
       {!auth && (
         <div className="navbar d-flex justify-content-between justify-content-lg-center">
-          <img className="logo " src={logo} />
+          <Link to={'/'}><img className="logo " src={logo} /></Link>
+          
           <Link to={"/login"} className="loginBtn text-decoration-none">
             Login
           </Link>
@@ -60,7 +61,7 @@ const Navbar = () => {
       {auth && (
         <div className="navbar d-flex justify-content-between">
           <div>
-            <img className="logo" src={logo} />
+          <Link to={'/'}><img className="logo " src={logo} /></Link>
           </div>
           <div className="">
             <div className="dropstart d-inline me-3">
