@@ -3,13 +3,16 @@ import '../../assets/css/navbar.css'
 import logo from  '../../assets/img/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import BASE_URL from '../../hooks/baseURL'
+import BtnSpinner from '../Auth/BtnSpinner'
 
 const Navbar = () => {
   let auth = localStorage.getItem('authToken');
   let navigate = useNavigate();
+  let [loading, setLoading] = useState(false);
 
   const logOut = (e) =>{
     e.preventDefault();
+    setLoading(true)
     //fetch api for logout url
     fetch(BASE_URL + '/logout', {
       method: 'POST',
@@ -22,6 +25,7 @@ const Navbar = () => {
           if (!response.ok) {
             throw new Error('Logout failed');
           }
+          setLoading(true);
           return response.json();
       })
       .then(data => {
@@ -29,6 +33,7 @@ const Navbar = () => {
           localStorage.removeItem('authUser');
           // console.log('Logout successful:', data);
           // alert("Logged Out Successfully.");
+          setLoading(false)
           navigate('/login');
       })
       .catch(error => {
@@ -47,7 +52,10 @@ const Navbar = () => {
     {auth && (
       <div className='navbar d-flex justify-content-between'>
         <img  className='logo' src={logo} />
-        <button className="loginBtn" onClick={logOut}>Logout</button>
+        <button className="loginBtn" onClick={logOut}>
+          {loading && <BtnSpinner />}
+          Logout
+        </button>
       </div>
     )}
     </>
