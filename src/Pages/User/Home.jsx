@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import '../../assets/css/user/home.css';
-
 import HomeFooter from '../../components/User/HomeFooter';
 import CategoriesAndWinner from '../../components/User/CategoriesAndWinner';
 import Footer from '../../components/User/Footer';
 import Platform from '../../components/User/Platform';
 import Hero from '../../components/User/Hero';
-
 
 export default function Home() {
   const [activeCategory,setActiveCategory]=useState('Home');
