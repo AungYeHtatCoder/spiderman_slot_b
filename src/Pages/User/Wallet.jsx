@@ -46,8 +46,8 @@ export default function Wallet() {
       .then((data) => {
         console.log(data);
         if (data.success) {
-          setUrl(BASE_URL+'/wallet')
-          useFetch(url);
+          // setUrl(BASE_URL+'/wallet')
+          // useFetch(url);
           setData(`ငွေသွင်း အောင်မြင်ပါသည်။`);
           setProvider('');
           setAmount('');
