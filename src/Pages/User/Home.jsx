@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import "../../assets/css/user/home.css";
-import HomeFooter from "../../components/User/HomeFooter";
 import CategoriesAndWinner from "../../components/User/CategoriesAndWinner";
-import Footer from "../../components/User/Footer";
-import Platform from "../../components/User/Platform";
-import Hero from "../../components/User/Hero";
+import Banner from "../../components/User/Banner";
+import HeroSideBar from "../../components/User/HeroSidebar";
+
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("LIVE-CASINO");
 
   return (
-    <div className="text-black homeBody">
-      <Hero />
-      <HomeFooter />
-      {/* Remove the wrapper div if want to set sticky top 0 for categories and winner */}
+    <>
+    <div className="hero">
+      <Banner/>
+      <HeroSideBar/>
+    </div>
       <div style={{ position: "sticky" }}>
         <CategoriesAndWinner
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
       </div>
-      
-
-      <Footer />
-      <Platform />
-    </div>
+    </>
   );
 }

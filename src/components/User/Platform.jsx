@@ -30,7 +30,7 @@ const Platform = () => {
     const carousel2=[p9,p10,p11,p12,p13,p14,p15,p16];
   return (
     <div>
-         <div className='container-fluid' >            
+         <div className='container-fluid mt-5' >            
         <OwlCarousel items={3}  
           className="owl-theme"
           loop  

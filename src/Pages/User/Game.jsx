@@ -4,6 +4,8 @@ import useFetch from '../../hooks/useFetch';
 import BASE_URL from '../../hooks/baseURL';
 import BtnSpinner from '../../components/Auth/BtnSpinner';
 import { Link } from 'react-router-dom';
+import Banner from '../../components/User/Banner';
+import HeroSideBar from '../../components/User/HeroSidebar';
 
 export default function Game() {
   let [loader, setLoader] = useState(false);
@@ -43,8 +45,11 @@ export default function Game() {
   }
 
   return (
-    <div className='homeBody text-white container-fluid'>
-      <Hero />
+    <>
+        <div className="hero">
+          <Banner/>
+          <HeroSideBar/>
+        </div>
         <h1 className='text-center my-4'>
         {loader && <BtnSpinner />}
           {title}
@@ -55,34 +60,32 @@ export default function Game() {
            <BtnSpinner className="mx-auto" />
           </div>
         }
+        <div className="container-fluid">
+          <div className="row">
+          {games && games.map((game, index) => (
+              <div className="col-lg-2 col-md-3 col-6 mb-4 text-center" key={index}>
+                {auth && (
+                  <>
+                  <div onClick={() => launchGame(game.id)} style={{ "cursor" : "pointer" }}>
+                    <img src={game.image} className='img-fluid rounded shadow' alt="" />
+                    <p className='text-white mt-3'>
+                      {game.name_en}
+                    </p>
+                  </div>
+                  </>
+                )}
+                {!auth && (
+                  <Link className='text-decoration-none' to={'/login'}>
+                    <img src={game.image} className='img-fluid rounded shadow' alt="" />
+                    <p className='text-white mt-3'>{game.name_en}</p>
+                  </Link>
+                )}
 
-        <div className="row">
-        {games && games.map((game, index) => (
-            <div className="col-lg-2 col-md-3 col-6 mb-4 text-center" key={index}>
-              {auth && (
-                <>
-                <div onClick={() => launchGame(game.id)} style={{ "cursor" : "pointer" }}>
-                  <img src={game.image} className='img-fluid rounded shadow' alt="" />
-                  <p className='text-white mt-3'>
-                    {game.name_en}
-                  </p>
-                </div>
-                </>
-              )}
-              {!auth && (
-                <Link className='text-decoration-none' to={'/login'}>
-                  <img src={game.image} className='img-fluid rounded shadow' alt="" />
-                  <p className='text-white mt-3'>{game.name_en}</p>
-                </Link>
-              )}
-
-            </div>
-        ))}
-        {
-          games.length === 0 && 
-          <h6 className='text-center'>There is no game in that provider "{title}".</h6>
-        }
+              </div>
+          ))}
+          </div>
         </div>
-    </div>
+
+    </>
   )
 }
