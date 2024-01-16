@@ -1,16 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetch from '../../hooks/useFetch'
 import BASE_URL from '../../hooks/baseURL';
+import BtnSpinner from '../../components/Auth/BtnSpinner';
+
 
 export default function Wallet() {
-  const {data:wallet, loading, error} = useFetch(BASE_URL+'/wallet');
-  let authUser = JSON.parse(localStorage.getItem("authUser"));
+  let [url, setUrl] = useState(BASE_URL+'/wallet')
+  let [url1, setUrl1] = useState(BASE_URL+'/get-player-wallet-provider-code')
 
+  let {data:wallet} = useFetch(url);
+  const {data:providers} = useFetch(url1);
+
+  const [provider, setProvider] = useState('');
+  const [amount, setAmount] = useState('');
+  const [data, setData] = useState(null);
+  const [loader, setLoader] = useState(false);
+
+
+  const deposit = async (e) => {
+    e.preventDefault();
+  
+    const formData = {
+      provider_code: provider,
+      amount: amount
+    };
+    // console.log(formData);
+  
+    setLoader(true);
+  
+    fetch(BASE_URL + '/play-slot-game', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Deposit Failed");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.success) {
+          setUrl(BASE_URL+'/wallet')
+          useFetch(url);
+          setData(`ငွေသွင်း အောင်မြင်ပါသည်။`);
+          setProvider('');
+          setAmount('');
+          setLoader(false);
+        }
+      })
+    }
 
   return (
     <>
-        <div className="container-fluid my-4">
-            <h3 className='text-center'>My Wallet</h3>
+        <div className="container-fluid my-5">
+            <h3 className='text-center mb-4'>My Wallet {provider + amount}</h3>
             <div className="row">
               <div className="col-md-3">
                 <div className="bg-transparent border border-1 p-2 px-3 rounded-3 shadow d-none d-md-block">
@@ -21,7 +70,7 @@ export default function Wallet() {
                           <span>
                             K
                             {parseFloat(
-                              authUser.userData.balance
+                              wallet.user?.balance
                             ).toLocaleString()}
                           </span>
                         </div>
@@ -75,26 +124,61 @@ export default function Wallet() {
                 </div>
               </div>
               <div className="col-md-9">
-                <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">  
-                <h5 className='mb-4'>Deposit (ငွေသွင်းရန်)</h5>
-                  <form>
+                <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow mb-4">  
+                <h5 className='mb-4'>Deposit (ငွေသွင်းရန်) <span className="badge text-bg-info">{data}</span> </h5>
+                  <form onSubmit={deposit}>
                     <div className="row">
-                      <div className="col-6">
+                      <div className="col-md-6">
                         <div className="mb-3">
                           <label htmlFor="p_code" className="form-label">ဂိမ်းအမျိုးအစား ရွေးချယ်ပါ</label>
-                          <select className='form-label form-select' name="" id="p_code">
-                            <option value=""></option>
+                          <select className="form-select" name="provider_code" id="p_code" onChange={(e) => setProvider(e.target.value)}>
+                            <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
+                            {providers && providers.map((provider, index) => (
+                              <option key={index} value={provider.p_code}>{provider.description}</option>
+                            ))}
                           </select>
                         </div>
                       </div>
-                      <div className="col-6">
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label htmlFor="amount" className="form-label">ငွေပမာဏ ထည့်ပါ</label>
+                          <input type="number" placeholder="ငွေပမာဏ ထည့်ပါ" name="amount" className="form-control" onChange={(e) => setAmount(e.target.value)} />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-end">
+                      <button className="btn btn-red" type="submit">
+                        {loader && <BtnSpinner/>}
+                        ငွေသွင်းမည်
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">  
+                <h5 className='mb-4'>Withdraw (ငွေထုတ်ရန်)</h5>
+                  <form>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <div className="mb-3">
+                          <label htmlFor="p_code" className="form-label">ဂိမ်းအမျိုးအစား ရွေးချယ်ပါ</label>
+                          <select className='form-label form-select' name="" id="p_code">
+                          <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
+                            {providers && providers.map((provider, index)=>(
+                              <option key={index} value={provider.p_code}>{provider.description}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
                         <div className="mb-3">
                           <label htmlFor="amount" className="form-label">ငွေပမာဏ ထည့်ပါ</label>
                           <input type="number" placeholder="ငွေပမာဏ ထည့်ပါ" className="form-control" />
                         </div>
                       </div>
                     </div>
-
+                    <div className="text-end">
+                      <button className="btn btn-red">ငွေထုတ်မည်</button>
+                    </div>
                   </form>
                 </div>
               </div>

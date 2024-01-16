@@ -13,8 +13,6 @@ const Navbar = () => {
   let [smallLoad, setSmallLoad] = useState(false);
   let url = BASE_URL + "/wallet";
   let { data: wallet, loading, error } = useFetch(url);
-  // console.log(wallet);
-  // console.log(authUser);
 
   const logOut = (e) => {
     e.preventDefault();
@@ -91,7 +89,7 @@ const Navbar = () => {
                           <span>
                             K
                             {parseFloat(
-                              authUser.userData.balance
+                              wallet.user?.balance
                             ).toLocaleString()}
                           </span>
                         </div>
