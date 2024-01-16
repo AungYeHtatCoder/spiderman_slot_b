@@ -14,7 +14,7 @@ const Hero = () => {
       </marquee>
       <Navbar />
       <Banner/>
-      {/* <HeroSideBar/> */}
+      <HeroSideBar/>
     </div>
   )
 }
