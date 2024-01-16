@@ -9,6 +9,7 @@ export default function Wallet() {
   let [url1, setUrl1] = useState(BASE_URL+'/get-player-wallet-provider-code')
 
   let {data:wallet} = useFetch(url);
+  
   const {data:providers} = useFetch(url1);
 
   const [provider, setProvider] = useState('');
@@ -17,26 +18,59 @@ export default function Wallet() {
   const [loader, setLoader] = useState(false);
 
 
-  const deposit = async (e) => {
-    e.preventDefault();
+  // const deposit1 = (e) => {
+  //   e.preventDefault();
   
-    const formData = {
-      provider_code: provider,
-      amount: amount
-    };
-    // console.log(formData);
+  //   const formData = {
+  //     provider_code: provider,
+  //     amount: amount
+  //   };
   
-    setLoader(true);
+  //   setLoader(true);
   
-    fetch(BASE_URL + '/play-slot-game', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('authToken'),
-      },
-      body: JSON.stringify(formData),
-    })
+  //   fetch(BASE_URL + '/play-slot-game', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //       Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Deposit Failed");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data.data);
+  //       if (data) {
+  //         wallet = data.data;
+  //         // useFetch(url);
+  //         setData(`ငွေသွင်း အောင်မြင်ပါသည်။`);
+  //         setProvider('');
+  //         setAmount('');
+  //         setLoader(false);
+  //       }
+  //     })
+  //   }
+
+    const deposit = (e) => {
+      e.preventDefault();
+      const formData = { provider_code: provider, amount: amount };
+    
+      setLoader(true);
+    
+      fetch(`${BASE_URL}/play-slot-game`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+        },
+        body: JSON.stringify(formData),
+      })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Deposit Failed");
@@ -44,17 +78,21 @@ export default function Wallet() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
-        if (data.success) {
-          // setUrl(BASE_URL+'/wallet')
-          // useFetch(url);
-          setData(`ငွေသွင်း အောင်မြင်ပါသည်။`);
-          setProvider('');
-          setAmount('');
-          setLoader(false);
-        }
+        // console.log(data.data);
+        setProvider('');
+        setAmount('');
+        window.location.reload();
+        // setData(`ငွေသွင်း အောင်မြင်ပါသည်။`);
       })
+      .catch((error) => {
+        console.error("Deposit Error:", error);
+        setData(`Error: ${error.message}`);
+      })
+      .finally(() => {
+        setLoader(false);
+      });
     }
+    
 
   return (
     <>
