@@ -53,10 +53,13 @@ export default function Wallet() {
       .post(BASE_URL + "/play-slot-game", formData, { headers })
       .then((response) => {
         if (response.status == 200) {
+          let wallet = response.data;
           getList();
           setLoader(false);
           setAmount("");
           setProvider("");
+          localStorage.removeItem("wallet");
+          localStorage.setItem("wallet", JSON.stringify(wallet));
         }
       });
   };
