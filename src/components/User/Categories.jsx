@@ -17,25 +17,24 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
 
   return (
     <>
-    <div className="categories gap-3 d-flex align-items-center justify-content-center">
-      {games &&
-        games.map((game) => {
-          return (
-            <div
-              key={game.id}
-              onClick={() => {
-                setActiveCategory(game.description),
-                  setUrl(BASE_URL + "/providerCodes/" + game.id);
-              }}
-              className="category "
-            >
-              <img className="categoryImg" src={game.icon} />
-              <p className="font-weight-bold">{game.description}</p>
-            </div>
-          );
-        })}
-        
-    </div>
+      <div className="categories gap-3 d-flex align-items-center justify-content-center">
+        {games &&
+          games.map((game) => {
+            return (
+              <div
+                key={game.id}
+                onClick={() => {
+                  setActiveCategory(game.description),
+                    setUrl(BASE_URL + "/providerCodes/" + game.id);
+                }}
+                className="category "
+              >
+                <img className="categoryImg" src={game.icon} />
+                <p className="font-weight-bold">{game.description}</p>
+              </div>
+            );
+          })}
+      </div>
     </>
   );
 };
