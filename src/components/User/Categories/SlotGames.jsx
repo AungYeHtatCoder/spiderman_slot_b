@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const SlotGames = ({ providers, loading }) => {
   return (
-    <div className="px-2 px-sm-4 py-4">
+    <div className="px-2 px-sm-4 pb-5 mb-5 pt-4">
       {loading && <BtnSpinner />}
       <div className="row">
         
