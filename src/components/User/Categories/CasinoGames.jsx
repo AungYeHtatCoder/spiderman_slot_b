@@ -6,6 +6,7 @@ import BASE_URL from "../../../hooks/baseURL";
 const CasinoGames = ({ providers, loading }) => {
 
   let [loader, setLoader] = useState(false);
+  let auth = localStorage.getItem('authToken');
 
   const launchGame = (gameId) => {
     setLoader(true);
@@ -44,12 +45,25 @@ const CasinoGames = ({ providers, loading }) => {
             return (
               <div className="col-md-3 col-6 mb-4" key={index}>
                 {provider.p_code !== "PR" && (
-                  <Link className="text-decoration-none" onClick={() => launchGame(provider.id)} style={{ "cursor" : "pointer" }}>
-                    <img src={provider.img_url} className='categoryGame' alt="" />
-                    <p className='text-white mt-2 text-center'>
-                      {provider.description}
-                    </p>
-                  </Link>
+                  <>
+                  {auth && (
+                      <Link className="text-decoration-none" onClick={() => launchGame(provider.id)} style={{ "cursor" : "pointer" }}>
+                        <img src={provider.img_url} className='categoryGame' alt="" />
+                        <p className='text-white mt-2 text-center'>
+                          {provider.description}
+                        </p>
+                      </Link>
+                  )}
+                  {!auth && (
+                      <Link className="text-decoration-none" to={'/login'} style={{ "cursor" : "pointer" }}>
+                          <img src={provider.img_url} className='categoryGame' alt="" />
+                          <p className='text-white mt-2 text-center'>
+                          {provider.description}
+                          </p>
+                      </Link>
+                  )}
+
+                  </>
                 )}
                 {provider.p_code === "PR" && (
                   <>
