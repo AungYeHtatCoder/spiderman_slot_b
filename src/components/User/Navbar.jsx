@@ -51,8 +51,10 @@ const Navbar = () => {
     <>
       {!auth && (
         <div className="navbar d-flex justify-content-between justify-content-lg-center">
-          <Link to={'/'}><img className="logo " src={logo} /></Link>
-          
+          <Link to={"/"}>
+            <img className="logo " src={logo} />
+          </Link>
+
           <Link to={"/login"} className="loginBtn text-decoration-none">
             Login
           </Link>
@@ -61,10 +63,12 @@ const Navbar = () => {
       {auth && (
         <div className="navbar d-flex justify-content-between">
           <div>
-          <Link to={'/'}><img className="logo " src={logo} /></Link>
+            <Link to={"/"}>
+              <img className="logo " src={logo} />
+            </Link>
           </div>
           <div className="">
-            <div className="dropstart d-inline me-3">
+            <div className="dropdown-center d-inline me-3">
               <a
                 className="btn dropdown-toggle"
                 href="#"
@@ -81,7 +85,7 @@ const Navbar = () => {
                 {wallet && (
                   <>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>WALLET</span>
                           <span>
@@ -94,7 +98,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>ASIAGAMING</span>
                           <span>{wallet.ag_wallet}</span>
@@ -102,7 +106,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>GAMEPLAY</span>
                           <span>{wallet.g8_wallet}</span>
@@ -110,7 +114,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>BBIN</span>
                           <span>{wallet.gb_wallet}</span>
@@ -118,7 +122,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>JDB</span>
                           <span>{wallet.jd_wallet}</span>
@@ -126,7 +130,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>JOKER</span>
                           <span>{wallet.jk_wallet}</span>
@@ -134,7 +138,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>KING855</span>
                           <span>{wallet.k9_wallet}</span>
@@ -142,7 +146,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>NEW LIVE22</span>
                           <span>{wallet.l4_wallet}</span>
@@ -150,7 +154,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>PGSOFT</span>
                           <span>{wallet.pg_wallet}</span>
@@ -158,7 +162,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>PRAGMATIC</span>
                           <span>{wallet.pr_wallet}</span>
@@ -166,7 +170,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>KING MAKER</span>
                           <span>{wallet.re_wallet}</span>
@@ -174,7 +178,7 @@ const Navbar = () => {
                       </a>
                     </li>
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <a className="dropdown-item py-2" href="#">
                         <div className="d-flex justify-content-between">
                           <span>SBO</span>
                           <span>{wallet.s3_wallet}</span>
