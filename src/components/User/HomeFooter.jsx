@@ -1,18 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HomeFooter = () => {
     const footer=[
         {icon:<i className="fa-regular fa-envelope"></i>,title:"Messages"},
-        {icon:<i className="fa-solid fa-wallet"></i>,title:"Deposit"},
+        {icon:<i className="fa-solid fa-wallet"></i>,title:"Wallet"},
         {icon:<i className="fa-solid fa-bars"></i>,title:"Menu"}
     ]
   return (
     <div className='homeFooter d-flex d-lg-none justify-content-between align-items-center'>
       {footer.map((item)=>{
-        return <div  key={item.title} className='footerItem'>
+        return <Link to={item.title === "Wallet" ? "/wallet" : ""}  key={item.title} className='footerItem text-decoration-none pt-2'>
             {item.icon}
-            <p>{item.title}</p>
-        </div>
+            <p className='mt-2'>{item.title}</p>
+        </Link>
       })}
     </div>
   )
