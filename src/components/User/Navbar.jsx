@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/css/navbar.css";
 import logo from "../../assets/img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,8 +11,13 @@ const Navbar = () => {
   let authUser = JSON.parse(localStorage.getItem("authUser"));
   let navigate = useNavigate();
   let [smallLoad, setSmallLoad] = useState(false);
+
   let url = BASE_URL + "/wallet";
-  let { data: wallet, loading, error } = useFetch(url);
+  let { data: balance, loading, error } = useFetch(url);
+
+  localStorage.setItem("wallet", JSON.stringify(balance));
+
+  let wallet = JSON.parse(localStorage.getItem("wallet"));
 
   const logOut = (e) => {
     e.preventDefault();
@@ -87,10 +92,7 @@ const Navbar = () => {
                         <div className="d-flex justify-content-between">
                           <span>WALLET</span>
                           <span>
-                            K
-                            {parseFloat(
-                              wallet.user?.balance
-                            ).toLocaleString()}
+                            K{parseFloat(wallet.user?.balance).toLocaleString()}
                           </span>
                         </div>
                       </a>
