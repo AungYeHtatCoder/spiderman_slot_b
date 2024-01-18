@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
 import BtnSpinner from "../../components/Auth/BtnSpinner";
 import axios from "axios";
+import { useAuthContext } from "../../contexts/AuthContext";
+
 export default function Wallet() {
   // let [url, setUrl] = useState(BASE_URL + "/wallet");
   // let [url1, setUrl1] = useState(BASE_URL + "/get-player-wallet-provider-code");
@@ -10,6 +12,12 @@ export default function Wallet() {
   // let { data: wallet } = useFetch(url);
   const [wallet, setWallet] = useState(null);
   const [providers, setProviders] = useState(null);
+
+  const { wallets, setWallets } = useAuthContext();
+
+  useEffect(() => {
+    setWallets(wallet);
+  }, [wallet]);
 
   // const { data: providers } = useFetch(url1);
 
@@ -24,7 +32,9 @@ export default function Wallet() {
     };
     axios
       .get(BASE_URL + "/get-player-wallet-provider-code", { headers })
-      .then((response) => setProviders(response.data.data))
+      .then((response) => {
+        setProviders(response.data.data);
+      })
       .catch((e) => console.log(e));
   };
 
@@ -36,6 +46,7 @@ export default function Wallet() {
       .get(BASE_URL + "/wallet", { headers })
       .then((response) => setWallet(response.data.data));
   };
+
   useEffect(() => {
     getList();
     getProvider();
