@@ -5,8 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../../hooks/baseURL";
 import BtnSpinner from "./BtnSpinner";
 import { useForm } from "react-hook-form";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
+  const { authenticated, setAuthenticated, token, setToken } = useAuthContext();
+
   const navigate = useNavigate();
   const form = useForm();
   const { register, control, handleSubmit, formState } = form;
@@ -55,6 +58,7 @@ export default function Login() {
             })
           );
           setLoading(false);
+          setAuthenticated(true);
           //redirect to home page
           navigate("/");
         } else {
@@ -68,7 +72,7 @@ export default function Login() {
 
   return (
     <>
-      {!auth && (
+      {!authenticated && (
         <div className="text-white homeBody">
           <div className="container">
             <div className="row">
