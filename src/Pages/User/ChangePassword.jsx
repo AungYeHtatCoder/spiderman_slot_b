@@ -55,11 +55,7 @@ const ChangePassword = () => {
         </div>
       </div>
     </div>
-
-
-    
     </>
-
   );
 };
 

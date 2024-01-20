@@ -1,6 +1,7 @@
 import React from "react";
 import "../../assets/css/user/promotion.css";
-import HeroSideBar from "../../components/User/HeroSidebar";
+
+
 const Promotion = () => {
   return (
     <>
@@ -174,7 +175,6 @@ const Promotion = () => {
       </div>
     </div>
     </>
-
   );
 };
 
