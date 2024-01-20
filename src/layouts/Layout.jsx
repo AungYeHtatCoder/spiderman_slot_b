@@ -12,6 +12,7 @@ export default function Layout() {
     <>
       <div className="homeBody text-white pb-0">
         <Hero />
+
         <HomeFooter />
 
         <Outlet />
