@@ -62,7 +62,12 @@ const Promotion = () => {
             </div>
           </div>
         ))}
-        {detail && <PromotionDetail detail={detail} url={url} />}
+        {detail && (
+          <>
+          <PromotionDetail url={url}/>
+          </>
+        )
+        }
       </div>
     </div>
     </>
