@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import home from "../../assets/img/home.png";
-import slot from "../../assets/img/slot.png";
-import fish from "../../assets/img/fish.png";
-import casino from "../../assets/img/casino.png";
-import arcade from "../../assets/img/arcade.png";
-import sport from "../../assets/img/sport.png";
-import table from "../../assets/img/table.png";
 import useFetch from "../../hooks/useFetch";
 import BASE_URL from "../../hooks/baseURL";
-import { Outlet } from "react-router-dom";
 
 const Categories = ({ activeCategory, setActiveCategory, link }) => {
   let [url, setUrl] = useState(link);
@@ -18,22 +10,40 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
   return (
     <>
       <div className="categories gap-3 d-flex align-items-center justify-content-center">
-        {games &&
-          games.map((game) => {
-            return (
+        {games && (
+              <>
               <div
-                key={game.id}
                 onClick={() => {
-                  setActiveCategory(game.description),
-                    setUrl(BASE_URL + "/providerCodes/" + game.id);
+                  setActiveCategory(games[0]?.description),
+                    setUrl(BASE_URL + "/providerCodes/" + games[0]?.id);
                 }}
                 className="category "
               >
-                <img className="categoryImg" src={game.icon} />
-                <p className="font-weight-bold">{game.description}</p>
+                <img className="categoryImg" src={games[0]?.icon} />
+                <p className="font-weight-bold">{games[0]?.description}</p>
               </div>
-            );
-          })}
+              <div
+                onClick={() => {
+                  setActiveCategory(games[2]?.description),
+                    setUrl(BASE_URL + "/providerCodes/" + games[2]?.id);
+                }}
+                className="category "
+              >
+                <img className="categoryImg" src={games[2]?.icon} />
+                <p className="font-weight-bold">{games[2]?.description}</p>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveCategory(games[1]?.description),
+                    setUrl(BASE_URL + "/providerCodes/" + games[1]?.id);
+                }}
+                className="category "
+              >
+                <img className="categoryImg" src={games[1]?.icon} />
+                <p className="font-weight-bold">{games[1]?.description}</p>
+              </div>
+              </>
+        )}
       </div>
     </>
   );
