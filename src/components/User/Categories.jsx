@@ -14,18 +14,8 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
               <>
               <div
                 onClick={() => {
-                  setActiveCategory(games[0]?.description),
-                    setUrl(BASE_URL + "/providerCodes/" + games[0]?.id);
-                }}
-                className="category "
-              >
-                <img className="categoryImg" src={games[0]?.icon} />
-                <p className="font-weight-bold">{games[0]?.description}</p>
-              </div>
-              <div
-                onClick={() => {
                   setActiveCategory(games[2]?.description),
-                    setUrl(BASE_URL + "/providerCodes/" + games[2]?.id);
+                    setUrl(BASE_URL + "/providerCodes/" + games[0]?.id);
                 }}
                 className="category "
               >
@@ -35,12 +25,22 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
               <div
                 onClick={() => {
                   setActiveCategory(games[1]?.description),
-                    setUrl(BASE_URL + "/providerCodes/" + games[1]?.id);
+                    setUrl(BASE_URL + "/providerCodes/" + games[2]?.id);
                 }}
                 className="category "
               >
                 <img className="categoryImg" src={games[1]?.icon} />
                 <p className="font-weight-bold">{games[1]?.description}</p>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveCategory(games[0]?.description),
+                    setUrl(BASE_URL + "/providerCodes/" + games[0]?.id);
+                }}
+                className="category "
+              >
+                <img className="categoryImg" src={games[0]?.icon} />
+                <p className="font-weight-bold">{games[0]?.description}</p>
               </div>
               </>
         )}
