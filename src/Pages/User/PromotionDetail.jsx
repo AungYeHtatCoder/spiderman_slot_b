@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import useFetch from '../../hooks/useFetch';
-import BASE_URL from '../../hooks/baseURL';
 
-export default function PromotionDetail({detail, url}) {
-    const [close, setClose] = useState(detail);
+export default function PromotionDetail({url}) {
     let { data: promotion } = useFetch(url);
+    // console.log(close);
   return (
+    
     <>
     <div className="container">
-        <div>
-            <button className="btn btn-light"><i className="fas fa-arrow-left me-2"></i>Back</button>
-        </div>
+
         <div className="row">
             <div className="col-md-6 offset-md-3">
                 {promotion && (
