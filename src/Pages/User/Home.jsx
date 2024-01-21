@@ -6,7 +6,7 @@ import HeroSideBar from "../../components/User/HeroSidebar";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState("SLOT");
+  const [activeCategory, setActiveCategory] = useState("SLOTS");
 
   return (
     <>
