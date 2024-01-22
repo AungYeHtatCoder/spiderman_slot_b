@@ -1,6 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../assets/css/navbar.css";
+import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../hooks/baseURL";
+import { set } from "react-hook-form";
+
 const ChangePassword = () => {
+  let auth = localStorage.getItem("authToken");
+  let navigate = useNavigate();
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
+
+  if (!auth) {
+    useEffect(() => {
+      navigate("/"); 
+    }, [navigate]);
+  }
+
+  let handle = async (e) => {
+    e.preventDefault();
+
+    try {
+      let data = { currentPassword, password };
+      // console.log(data);
+      let response = await fetch(BASE_URL + "/changePassword", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("authToken"),
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+  
+      let user = await response.json();
+      setUser(user.data);
+      console.log("Password Changed Successfully.");
+      setCurrentPassword("");
+      setPassword("");
+      navigate("/");
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
   return (
     <>
     <div className="container">
@@ -14,7 +65,7 @@ const ChangePassword = () => {
               လျှို့ဝှက်နံပါတ်ပြောင်းမည်
             </h6>
             <div className="container my-4">
-              <form>
+              <form onSubmit={handle}>
                 <div className="form-group mb-3">
                   <input
                     type="password"
@@ -22,6 +73,8 @@ const ChangePassword = () => {
                     placeholder="လျှို့ဝှက်နံပါတ်အဟောင်း"
                     name="current_password"
                     id="current_password"
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    value={currentPassword}
                   />
                 </div>
 
@@ -30,17 +83,10 @@ const ChangePassword = () => {
                     type="password"
                     className="form-control"
                     placeholder="လျှို့ဝှက်နံပါတ်အသစ်"
-                    name="new_password"
+                    name="password"
                     id="new_password"
-                  />
-                </div>
-                <div className="form-group mb-4">
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder="အတည်လျှို့ဝှက်နံပါတ်"
-                    name="new_password_confirmation"
-                    id="new_password_confirmation"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                   />
                 </div>
 

@@ -15,6 +15,7 @@ export default function Login() {
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
   const auth = localStorage.getItem("authToken");
+  
   if (auth) {
     useEffect(() => {
       navigate("/"); // Navigate to the home route
