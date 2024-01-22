@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { authenticated, setAuthenticated, token, setToken } = useAuthContext();
+  const { authenticated, setAuthenticated } = useAuthContext();
 
   const navigate = useNavigate();
   const form = useForm();
@@ -59,6 +59,7 @@ export default function Login() {
           );
           setLoading(false);
           setAuthenticated(true);
+
           //redirect to home page
           navigate("/");
         } else {

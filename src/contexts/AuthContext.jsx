@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { set } from "react-hook-form";
+import BASE_URL from "../hooks/baseURL";
 
 // const AuthContext = React.createContext();
 
@@ -52,6 +52,7 @@ export const AuthContextProvider = (props) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   const [wallets, setWallets] = useState(null);
+  // console.log(authUser);
 
   const setToken = (token) => {
     _setToken(token);
