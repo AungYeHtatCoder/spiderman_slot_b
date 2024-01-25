@@ -204,7 +204,7 @@ const Navbar = () => {
               </ul>
             </div>
             <Link className="text-decoration-none text-white me-4">
-              {!user.profile && (
+              {user && !user.profile && (
                 <i
                   className="fa-regular fa-user-circle"
                   style={{ fontSize: "20px" }}

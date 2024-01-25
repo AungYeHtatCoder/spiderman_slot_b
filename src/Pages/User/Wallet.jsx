@@ -34,7 +34,7 @@ export default function Wallet() {
   const [data, setData] = useState(null);
   const [loader, setLoader] = useState(false);
   const [banks, setBank] = useState();
-  console.log(banks);
+  // console.log(banks);
   // console.log(amount);
   const getProvider = () => {
     const headers = {
