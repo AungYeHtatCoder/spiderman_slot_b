@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Categories from "./Categories";
-import Winner from "./Winner";
-import HomeHeroGames from "./Categories/HomeHeroGames";
-import HomePageGames from "./Categories/HomePageGames";
 import SlotGames from "./Categories/SlotGames";
-import FishGames from "./Categories/FishGames";
 import CasinoGames from "./Categories/CasinoGames";
-import ArcadeGames from "./Categories/ArcadeGames";
 import SportGames from "./Categories/SportGames";
-import TableGames from "./Categories/TableGames";
-import axios from "axios";
 import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
 
 const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
-  let [url, setUrl] = useState(BASE_URL + "/providerCodes/" + 2);
-  let [url1, setUrl1] = useState(BASE_URL + "/providerCodes/" + 3);
-  let [url2, setUrl2] = useState(BASE_URL + "/providerCodes/" + 4);
+  let [url, setUrl] = useState(BASE_URL + "/gameTypeProviders/" + 2);
+  let [url1, setUrl1] = useState(BASE_URL + "/gameTypeProviders/" + 3);
+  let [url2, setUrl2] = useState(BASE_URL + "/gameTypeProviders/" + 4);
   let { data: play, loading, error } = useFetch(url);
   let { data: play1, loading1, error1 } = useFetch(url1);
   let { data: play2, loading2, error2 } = useFetch(url2);
