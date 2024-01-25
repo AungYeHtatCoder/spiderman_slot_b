@@ -26,6 +26,7 @@ export default function Login() {
   const [data, setData] = useState([]);
   const [error, setError] = useState({});
   const [phone, setPhone] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -71,6 +72,10 @@ export default function Login() {
       })
       .catch((error) => {
         console.error(error);
+        if (error) {
+          setErrorMessage("Phone Or Password is incorrect!");
+          setLoading(false);
+        }
       });
   };
 
@@ -81,6 +86,15 @@ export default function Login() {
           <div className="container">
             <div className="row">
               <div className="col-lg-4 offset-lg-4">
+                {errorMessage && (
+                  <div
+                    className="alert alert-danger mt-2"
+                    role="alert"
+                    style={{ fontSize: "14px" }}
+                  >
+                    {errorMessage}
+                  </div>
+                )}
                 <div className="border border-1 rounded-3 shadow-lg p-4 loginCard">
                   <div className="text-center mb-4 me-4">
                     <Link to={"/"}>
