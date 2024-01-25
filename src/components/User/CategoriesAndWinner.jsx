@@ -5,6 +5,8 @@ import CasinoGames from "./Categories/CasinoGames";
 import SportGames from "./Categories/SportGames";
 import BASE_URL from "../../hooks/baseURL";
 import useFetch from "../../hooks/useFetch";
+import HomeHeroGames from "./Categories/HomeHeroGames";
+import ArcadeGames from "./Categories/ArcadeGames";
 
 const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
   let [url, setUrl] = useState(BASE_URL + "/gameTypeProviders/" + 2);
@@ -25,6 +27,8 @@ const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
         style={{ overflowY: "scroll", overflowX: "hidden" }}
         className="mt-sm-5"
       >
+        {activeCategory === "all" && <ArcadeGames />}
+        {activeCategory === "hotgame" && <HomeHeroGames />}
         {activeCategory === "LIVE-CASINO" && (
           <CasinoGames providers={play.providers} loading={loading} />
         )}

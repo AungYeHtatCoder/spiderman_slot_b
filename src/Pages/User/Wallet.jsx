@@ -121,7 +121,7 @@ export default function Wallet() {
   const withdraw = (e) => {
     e.preventDefault();
     const formData = { user_bank_id: bank, amount: withdrawAmount };
-    // console.log(formData);
+    console.log(formData);
 
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -270,7 +270,6 @@ export default function Wallet() {
                   </button>
                 </div>
               </form>
-              <DevTool control={control} />
             </div>
             <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
               <h5 className="mb-4">Withdraw (ငွေထုတ်ရန်)</h5>
