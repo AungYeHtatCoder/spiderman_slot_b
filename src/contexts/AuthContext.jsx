@@ -45,14 +45,15 @@ export const AuthContext = createContext({
   setAuthenticated: () => {},
   wallets: null,
   setWallets: () => {},
+  authUser: null,
+  setAuthUser: () => {},
 });
 
 export const AuthContextProvider = (props) => {
   const [token, _setToken] = useState(localStorage.getItem("authToken"));
   const [authenticated, setAuthenticated] = useState(false);
-
+  const [authUser, setAuthUser] = useState();
   const [wallets, setWallets] = useState(null);
-  // console.log(authUser);
 
   const setToken = (token) => {
     _setToken(token);
@@ -78,6 +79,8 @@ export const AuthContextProvider = (props) => {
         setAuthenticated,
         wallets,
         setWallets,
+        authUser,
+        setAuthUser,
       }}
     >
       {props.children}
