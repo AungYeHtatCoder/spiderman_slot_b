@@ -11,17 +11,26 @@ const Navbar = () => {
   const { wallets, setWallets, authenticated, setAuthenticated } =
     useAuthContext();
 
+  const [user, setUser] = useState();
+
   let auth = localStorage.getItem("authToken");
-  let authUser = JSON.parse(localStorage.getItem("authUser"));
+  let authUser = localStorage.getItem("authUser");
+
   let navigate = useNavigate();
   let [smallLoad, setSmallLoad] = useState(false);
 
-  let url = BASE_URL + "/wallet";
+  let url = BASE_URL + "/wallet/currentWallet";
   let { data: wallet, loading, error } = useFetch(url);
-
+  // console.log(wallet);
   useEffect(() => {
     setWallets(wallet);
   }, [wallet]);
+
+  if (auth) {
+    useEffect(() => {
+      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+    }, []);
+  }
 
   const logOut = (e) => {
     e.preventDefault();
@@ -97,8 +106,7 @@ const Navbar = () => {
                         <div className="d-flex justify-content-between">
                           <span>WALLET</span>
                           <span>
-                            K
-                            {parseFloat(wallets.user?.balance).toLocaleString()}
+                            K{parseFloat(user?.balance).toLocaleString()}
                           </span>
                         </div>
                       </a>
@@ -196,7 +204,7 @@ const Navbar = () => {
               </ul>
             </div>
             <Link className="text-decoration-none text-white me-4">
-              {!authUser.userData.profile && (
+              {!user.profile && (
                 <i
                   className="fa-regular fa-user-circle"
                   style={{ fontSize: "20px" }}

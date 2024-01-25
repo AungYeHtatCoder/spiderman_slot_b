@@ -10,9 +10,10 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
   return (
     <>
       <div className="categories gap-3 d-flex align-items-center justify-content-center">
-        {games && games.map((game, index) => {
-          <>
-          <div
+        {games &&
+          games.map((game, index) => {
+            <>
+              <div
                 onClick={() => {
                   setActiveCategory(game.description),
                     setUrl(BASE_URL + "/providerCodes/" + game.id);
@@ -21,9 +22,9 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
               >
                 <img className="categoryImg" src={game.icon} />
                 <p className="font-weight-bold">{game.description}</p>
-          </div>
-          </>
-        })}
+              </div>
+            </>;
+          })}
         {/* {games && (
               <>
               <div

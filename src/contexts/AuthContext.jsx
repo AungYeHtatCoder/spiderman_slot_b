@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { set } from "react-hook-form";
+import BASE_URL from "../hooks/baseURL";
 
 // const AuthContext = React.createContext();
 
@@ -45,12 +45,14 @@ export const AuthContext = createContext({
   setAuthenticated: () => {},
   wallets: null,
   setWallets: () => {},
+  authUser: null,
+  setAuthUser: () => {},
 });
 
 export const AuthContextProvider = (props) => {
   const [token, _setToken] = useState(localStorage.getItem("authToken"));
   const [authenticated, setAuthenticated] = useState(false);
-
+  const [authUser, setAuthUser] = useState();
   const [wallets, setWallets] = useState(null);
 
   const setToken = (token) => {
@@ -77,6 +79,8 @@ export const AuthContextProvider = (props) => {
         setAuthenticated,
         wallets,
         setWallets,
+        authUser,
+        setAuthUser,
       }}
     >
       {props.children}

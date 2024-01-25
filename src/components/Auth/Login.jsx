@@ -8,14 +8,14 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { authenticated, setAuthenticated, token, setToken } = useAuthContext();
+  const { authenticated, setAuthenticated, setAuthUser } = useAuthContext();
 
   const navigate = useNavigate();
   const form = useForm();
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
   const auth = localStorage.getItem("authToken");
-  
+
   if (auth) {
     useEffect(() => {
       navigate("/"); // Navigate to the home route
@@ -26,6 +26,7 @@ export default function Login() {
   const [data, setData] = useState([]);
   const [error, setError] = useState({});
   const [phone, setPhone] = useState("");
+
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -46,12 +47,13 @@ export default function Login() {
         }
         return response.json();
       })
-      .then((data) => {
+      .then((responseData) => {
         // console.log('Login successful:', data);
-        setData(data);
+        setData(responseData);
         if (data) {
-          const userData = data.data.user;
-          localStorage.setItem("authToken", data.data.token);
+          const userData = responseData.data.user;
+
+          localStorage.setItem("authToken", responseData.data.token);
           localStorage.setItem(
             "authUser",
             JSON.stringify({
@@ -60,6 +62,7 @@ export default function Login() {
           );
           setLoading(false);
           setAuthenticated(true);
+
           //redirect to home page
           navigate("/");
         } else {

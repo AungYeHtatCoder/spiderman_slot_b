@@ -6,7 +6,7 @@ import axios from "axios";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Wallet() {
-  // let [url, setUrl] = useState(BASE_URL + "/wallet");
+  let [url, setUrl] = useState(BASE_URL + "/wallet/currentWallet");
   // let [url1, setUrl1] = useState(BASE_URL + "/get-player-wallet-provider-code");
 
   // let { data: wallet } = useFetch(url);
@@ -15,23 +15,33 @@ export default function Wallet() {
 
   const { wallets, setWallets } = useAuthContext();
 
+  const [user, setUser] = useState();
+  // console.log(user);
   useEffect(() => {
     setWallets(wallet);
   }, [wallet]);
 
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+  }, []);
+
   // const { data: providers } = useFetch(url1);
 
   const [provider, setProvider] = useState("");
+  const [bank, setInputBank] = useState("");
+  // console.log(wallets);
   const [amount, setAmount] = useState("");
   const [data, setData] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [banks, setBank] = useState();
+  console.log(banks);
   // console.log(amount);
   const getProvider = () => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .get(BASE_URL + "/get-player-wallet-provider-code", { headers })
+      .get(BASE_URL + "/providers", { headers })
       .then((response) => {
         setProviders(response.data.data);
       })
@@ -43,25 +53,38 @@ export default function Wallet() {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .get(BASE_URL + "/wallet", { headers })
+      .get(BASE_URL + "/wallet/currentWallet", { headers })
       .then((response) => setWallet(response.data.data));
+  };
+
+  const getBank = () => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .get(BASE_URL + "/bank/all", { headers })
+      .then((response) => {
+        setBank(response.data.data);
+      })
+      .catch((e) => console.log(e));
   };
 
   useEffect(() => {
     getList();
     getProvider();
+    getBank();
   }, []);
 
   const deposit = (e) => {
     e.preventDefault();
-    const formData = { provider_code: provider, amount: amount };
+    const formData = { p_code: provider, cash_in: amount };
     // console.log(formData);
     setLoader(true);
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .post(BASE_URL + "/play-slot-game", formData, { headers })
+      .post(BASE_URL + "/transaction/deposit", formData, { headers })
       .then((response) => {
         if (response.status == 200) {
           let wallet = response.data;
@@ -71,6 +94,27 @@ export default function Wallet() {
           setProvider("");
           localStorage.removeItem("wallet");
           localStorage.setItem("wallet", JSON.stringify(wallet));
+        }
+      });
+  };
+
+  const withdraw = (e) => {
+    e.preventDefault();
+    const formData = { user_bank_id: bank, amount: amount };
+    // console.log(formData);
+
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .post(BASE_URL + "/transaction/withdraw", formData, { headers })
+      .then((response) => {
+        if (response.status == 200) {
+          let wallet = response.data;
+          // getList();
+          setLoader(false);
+          setAmount("");
+          setInputBank("");
         }
       });
   };
@@ -86,9 +130,7 @@ export default function Wallet() {
                 <>
                   <div className="d-flex justify-content-between">
                     <span>WALLET</span>
-                    <span>
-                      K{parseFloat(wallet.user?.balance).toLocaleString()}
-                    </span>
+                    <span>K{parseFloat(user?.balance).toLocaleString()}</span>
                   </div>
                   <div className="d-flex justify-content-between">
                     <span>ASIAGAMING</span>
@@ -194,23 +236,25 @@ export default function Wallet() {
             </div>
             <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
               <h5 className="mb-4">Withdraw (ငွေထုတ်ရန်)</h5>
-              <form>
+              <form onSubmit={withdraw}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mb-3">
                       <label htmlFor="p_code" className="form-label">
-                        ဂိမ်းအမျိုးအစား ရွေးချယ်ပါ
+                        ဘဏ် ရွေးချယ်ပါ
                       </label>
                       <select
                         className="form-label form-select"
                         name=""
                         id="p_code"
+                        value={bank}
+                        onChange={(e) => setInputBank(e.target.value)}
                       >
                         <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
-                        {providers &&
-                          providers.map((provider, index) => (
-                            <option key={index} value={provider.p_code}>
-                              {provider.description}
+                        {banks &&
+                          banks.map((bank, index) => (
+                            <option key={index} value={bank.id}>
+                              {bank.name}
                             </option>
                           ))}
                       </select>
@@ -224,7 +268,9 @@ export default function Wallet() {
                       <input
                         type="number"
                         placeholder="ငွေပမာဏ ထည့်ပါ"
+                        value={amount}
                         className="form-control"
+                        onChange={(e) => setAmount(e.target.value)}
                       />
                     </div>
                   </div>
