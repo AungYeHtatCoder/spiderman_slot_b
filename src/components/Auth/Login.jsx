@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-  const { authenticated, setAuthenticated, setAuthUser } = useAuthContext();
+  const { authenticated, setAuthenticated } = useAuthContext();
 
   const navigate = useNavigate();
   const form = useForm();

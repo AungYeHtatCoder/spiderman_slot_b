@@ -4,12 +4,18 @@ import BASE_URL from "../../hooks/baseURL";
 import BtnSpinner from "../../components/Auth/BtnSpinner";
 import axios from "axios";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 export default function Wallet() {
   let [url, setUrl] = useState(BASE_URL + "/wallet/currentWallet");
   // let [url1, setUrl1] = useState(BASE_URL + "/get-player-wallet-provider-code");
 
-  // let { data: wallet } = useFetch(url);
+  const form = useForm();
+  const { register, control, handleSubmit, formState, reset } = form;
+  const { errors } = formState;
   const [wallet, setWallet] = useState(null);
   const [providers, setProviders] = useState(null);
 
@@ -31,6 +37,7 @@ export default function Wallet() {
   const [bank, setInputBank] = useState("");
   // console.log(wallets);
   const [amount, setAmount] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
   const [data, setData] = useState(null);
   const [loader, setLoader] = useState(false);
   const [banks, setBank] = useState();
@@ -75,8 +82,9 @@ export default function Wallet() {
     getBank();
   }, []);
 
-  const deposit = (e) => {
-    e.preventDefault();
+  const deposite = (depositeData) => {
+    // e.preventDefault();
+    console.log(depositeData);
     const formData = { p_code: provider, cash_in: amount };
     // console.log(formData);
     setLoader(true);
@@ -84,23 +92,35 @@ export default function Wallet() {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .post(BASE_URL + "/transaction/deposit", formData, { headers })
+      .post(BASE_URL + "/transaction/deposit", depositeData, { headers })
       .then((response) => {
         if (response.status == 200) {
           let wallet = response.data;
           getList();
           setLoader(false);
-          setAmount("");
-          setProvider("");
-          localStorage.removeItem("wallet");
-          localStorage.setItem("wallet", JSON.stringify(wallet));
+          reset();
+          // localStorage.removeItem("wallet");
+          // localStorage.setItem("wallet", JSON.stringify(wallet));
+          toast.success("Deposite Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
+      })
+      .catch((error) => {
+        console.log(error.response);
       });
   };
 
   const withdraw = (e) => {
     e.preventDefault();
-    const formData = { user_bank_id: bank, amount: amount };
+    const formData = { user_bank_id: bank, amount: withdrawAmount };
     // console.log(formData);
 
     const headers = {
@@ -111,16 +131,27 @@ export default function Wallet() {
       .then((response) => {
         if (response.status == 200) {
           let wallet = response.data;
-          // getList();
+          getList();
           setLoader(false);
           setAmount("");
           setInputBank("");
+          toast.success("Withdraw Successfully", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
         }
       });
   };
 
   return (
     <>
+      <ToastContainer />
       <div className="container-fluid my-5">
         <h3 className="text-center mb-4">My Wallet</h3>
         <div className="row">
@@ -186,7 +217,7 @@ export default function Wallet() {
                 Deposit (ငွေသွင်းရန်)
                 <span className="badge text-bg-info">{data}</span>
               </h5>
-              <form onSubmit={deposit}>
+              <form onSubmit={handleSubmit(deposite)}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mb-3">
@@ -195,10 +226,10 @@ export default function Wallet() {
                       </label>
                       <select
                         className="form-select"
-                        name="provider_code"
                         id="p_code"
-                        value={provider}
-                        onChange={(e) => setProvider(e.target.value)}
+                        {...register("p_code", {
+                          required: "Provider Code is Required.",
+                        })}
                       >
                         <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
                         {providers &&
@@ -208,6 +239,9 @@ export default function Wallet() {
                             </option>
                           ))}
                       </select>
+                      <div className="error text-danger">
+                        {errors.p_code?.message}
+                      </div>
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -218,11 +252,14 @@ export default function Wallet() {
                       <input
                         type="number"
                         placeholder="ငွေပမာဏ ထည့်ပါ"
-                        name="amount"
-                        value={amount}
                         className="form-control"
-                        onChange={(e) => setAmount(e.target.value)}
+                        {...register("cash_in", {
+                          required: "Amount is Required.",
+                        })}
                       />
+                      <div className="error text-danger">
+                        {errors.cash_in?.message}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -233,6 +270,7 @@ export default function Wallet() {
                   </button>
                 </div>
               </form>
+              <DevTool control={control} />
             </div>
             <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
               <h5 className="mb-4">Withdraw (ငွေထုတ်ရန်)</h5>
@@ -268,9 +306,9 @@ export default function Wallet() {
                       <input
                         type="number"
                         placeholder="ငွေပမာဏ ထည့်ပါ"
-                        value={amount}
+                        value={withdrawAmount}
                         className="form-control"
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(e) => setWithdrawAmount(e.target.value)}
                       />
                     </div>
                   </div>
