@@ -361,7 +361,6 @@ export default function Wallet() {
                   <button className="btn btn-red">ငွေထုတ်မည်</button>
                 </div>
               </form>
-              <DevTool control={control2} />
             </div>
           </div>
         </div>
