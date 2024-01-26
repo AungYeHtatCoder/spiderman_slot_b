@@ -40,7 +40,7 @@ import sportg2 from "../../../assets/img/sport/g2.png";
 import sportg3 from "../../../assets/img/sport/g3.png";
 import axios from "axios";
 import BASE_URL from "../../../hooks/baseURL";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const hots = [hotg1, hotg2, hotg3, hotg4, hotg5, hotg6, hotg7, hotg8];
 const slots = [
@@ -181,6 +181,16 @@ const HomeHeroGames = () => {
                         style={{ width: "100%", height: "200px" }}
                       />
                     </div>
+                  )}
+                  {!auth && (
+                    <Link className="text-decoration-none" to={"/login"}>
+                      <img
+                        src={game.img_url}
+                        alt={game.name_en}
+                        className="img-fluid rounded shadow"
+                        style={{ width: "100%", height: "200px" }}
+                      />
+                    </Link>
                   )}
                 </div>
               );
