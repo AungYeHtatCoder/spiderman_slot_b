@@ -8,14 +8,38 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useNavigate } from "react-router-dom";
 
 export default function Wallet() {
-  let [url, setUrl] = useState(BASE_URL + "/wallet/currentWallet");
-  // let [url1, setUrl1] = useState(BASE_URL + "/get-player-wallet-provider-code");
+  const { authenticated, setAuthenticated } = useAuthContext();
 
-  const form = useForm();
-  const { register, control, handleSubmit, formState, reset } = form;
-  const { errors } = formState;
+  const navigate = useNavigate();
+
+  if (!authenticated) {
+    navigate("/login");
+  }
+
+  let [url, setUrl] = useState(BASE_URL + "/wallet/currentWallet");
+
+  const form = useForm({
+    mode: "onTouched",
+  });
+  const form2 = useForm();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = form;
+  const {
+    register: register2,
+    control: control2,
+    handleSubmit: handleSubmit2,
+    formState: { errors: errors2 },
+    reset: reset2,
+  } = form2;
+
   const [wallet, setWallet] = useState(null);
   const [providers, setProviders] = useState(null);
 
@@ -28,7 +52,9 @@ export default function Wallet() {
   }, [wallet]);
 
   useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+    if (authenticated) {
+      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+    }
   }, []);
 
   // const { data: providers } = useFetch(url1);
@@ -118,10 +144,10 @@ export default function Wallet() {
       });
   };
 
-  const withdraw = (e) => {
-    e.preventDefault();
+  const withdraw = (withdrawData) => {
+    console.log(withdrawData);
+    // e.preventDefault();
     const formData = { user_bank_id: bank, amount: withdrawAmount };
-    console.log(formData);
 
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -225,7 +251,9 @@ export default function Wallet() {
                         ဂိမ်းအမျိုးအစား ရွေးချယ်ပါ
                       </label>
                       <select
-                        className="form-select"
+                        className={`form-select ${
+                          errors.p_code && "border-2 border-danger"
+                        }`}
                         id="p_code"
                         {...register("p_code", {
                           required: "Provider Code is Required.",
@@ -252,9 +280,15 @@ export default function Wallet() {
                       <input
                         type="number"
                         placeholder="ငွေပမာဏ ထည့်ပါ"
-                        className="form-control"
+                        className={`form-control ${
+                          errors.cash_in && "border-2 border-danger"
+                        } `}
                         {...register("cash_in", {
                           required: "Amount is Required.",
+                          min: {
+                            value: 1000,
+                            message: "Sorry amount can't be below 1000",
+                          },
                         })}
                       />
                       <div className="error text-danger">
@@ -273,7 +307,7 @@ export default function Wallet() {
             </div>
             <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
               <h5 className="mb-4">Withdraw (ငွေထုတ်ရန်)</h5>
-              <form onSubmit={withdraw}>
+              <form onSubmit={handleSubmit2(withdraw)}>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="mb-3">
@@ -281,11 +315,13 @@ export default function Wallet() {
                         ဘဏ် ရွေးချယ်ပါ
                       </label>
                       <select
-                        className="form-label form-select"
-                        name=""
-                        id="p_code"
-                        value={bank}
-                        onChange={(e) => setInputBank(e.target.value)}
+                        className={`form-label form-select ${
+                          errors2.user_bank_id && "border-2 border-danger"
+                        }`}
+                        id="bank"
+                        {...register2("user_bank_id", {
+                          required: "Bank is Required.",
+                        })}
                       >
                         <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
                         {banks &&
@@ -295,6 +331,9 @@ export default function Wallet() {
                             </option>
                           ))}
                       </select>
+                      <div className="error text-danger">
+                        {errors2.user_bank_id?.message}
+                      </div>
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -305,10 +344,16 @@ export default function Wallet() {
                       <input
                         type="number"
                         placeholder="ငွေပမာဏ ထည့်ပါ"
-                        value={withdrawAmount}
-                        className="form-control"
-                        onChange={(e) => setWithdrawAmount(e.target.value)}
+                        className={`form-control ${
+                          errors2.amount && "border-2 border-danger"
+                        }`}
+                        {...register2("amount", {
+                          required: "Bank is Required.",
+                        })}
                       />
+                      <div className="error text-danger">
+                        {errors2.amount?.message}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -316,6 +361,7 @@ export default function Wallet() {
                   <button className="btn btn-red">ငွေထုတ်မည်</button>
                 </div>
               </form>
+              <DevTool control={control2} />
             </div>
           </div>
         </div>
