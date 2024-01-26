@@ -6,12 +6,15 @@ import BASE_URL from "../../hooks/baseURL";
 import BtnSpinner from "./BtnSpinner";
 import { useForm } from "react-hook-form";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { DevTool } from "@hookform/devtools";
 
 export default function Login() {
   const { authenticated, setAuthenticated } = useAuthContext();
 
   const navigate = useNavigate();
-  const form = useForm();
+  const form = useForm({
+    mode: "onTouched",
+  });
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
   const auth = localStorage.getItem("authToken");
@@ -33,6 +36,10 @@ export default function Login() {
 
   //login api calling
   const onSubmit = (loginData) => {
+    if (loginData) {
+      setLoading(true);
+    }
+
     //fetch api for login url
     fetch(BASE_URL + "/login", {
       method: "POST",
@@ -111,8 +118,10 @@ export default function Login() {
                         Phone
                       </label>
                       <input
-                        type="number"
-                        className="form-control"
+                        type="tel"
+                        className={`form-control ${
+                          errors.phone && "border-2 border-danger"
+                        }`}
                         id="phone"
                         placeholder="Enter Phone"
                         {...register("phone", {
@@ -129,7 +138,9 @@ export default function Login() {
                       </label>
                       <input
                         type={eye === false ? "password" : "text"}
-                        className="form-control"
+                        className={`form-control ${
+                          errors.password && "border-2 border-danger"
+                        }`}
                         id="password"
                         placeholder="Enter Password"
                         {...register("password", {
@@ -145,10 +156,7 @@ export default function Login() {
                       </div>
                     </div>
                     <div className="my-4">
-                      <button
-                        className="btn btn-red w-100 shadow py-2"
-                        onClick={() => setLoading(true)}
-                      >
+                      <button className="btn btn-red w-100 shadow py-2">
                         {loading && <BtnSpinner />}
                         Login
                       </button>
