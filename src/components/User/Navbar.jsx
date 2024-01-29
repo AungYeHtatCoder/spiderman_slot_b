@@ -21,6 +21,7 @@ const Navbar = () => {
 
   let url = BASE_URL + "/wallet/currentWallet";
   let { data: wallet, loading, error } = useFetch(url);
+
   // console.log(wallet);
   useEffect(() => {
     setWallets(wallet);
