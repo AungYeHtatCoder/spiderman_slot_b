@@ -16,6 +16,7 @@ const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
   let { data: play1, loading1, error1 } = useFetch(url1);
   let { data: play2, loading2, error2 } = useFetch(url2);
   // console.log(play.providers);
+
   return (
     <div className="categoriesAndWinner">
       <Categories
@@ -27,7 +28,9 @@ const CategoriesAndWinner = ({ activeCategory, setActiveCategory }) => {
         style={{ overflowY: "scroll", overflowX: "hidden" }}
         className="mt-sm-5"
       >
-        {activeCategory === "all" && <ArcadeGames />}
+        {activeCategory === "all" && (
+          <ArcadeGames name2="SLOT" loading={loading2} />
+        )}
         {activeCategory === "hotgame" && <HomeHeroGames />}
         {activeCategory === "LIVE-CASINO" && (
           <CasinoGames providers={play.providers} loading={loading} />
