@@ -6,6 +6,7 @@ import Footer from "../components/User/Footer";
 import Platform from "../components/User/Platform";
 import axios from "axios";
 import BASE_URL from "../hooks/baseURL";
+import HeroSideBar from "../components/User/HeroSidebar";
 
 export default function Layout() {
   return (

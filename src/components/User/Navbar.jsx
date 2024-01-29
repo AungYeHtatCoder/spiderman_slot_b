@@ -203,7 +203,10 @@ const Navbar = () => {
                 )}
               </ul>
             </div>
-            <Link className="text-decoration-none text-white me-4">
+            <Link
+              to="/profile"
+              className="text-decoration-none text-white me-4"
+            >
               {user && !user.profile && (
                 <i
                   className="fa-regular fa-user-circle"

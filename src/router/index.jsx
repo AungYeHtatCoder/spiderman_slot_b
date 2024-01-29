@@ -6,6 +6,7 @@ import Wallet from "../Pages/User/Wallet";
 import Layout from "../layouts/Layout";
 import Promotion from "../Pages/User/Promotion";
 import ChangePassword from "../Pages/User/ChangePassword";
+import Profile from "../Pages/User/Profile";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/change-password",
         element: <ChangePassword />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
