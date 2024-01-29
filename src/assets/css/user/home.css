@@ -519,7 +519,7 @@ marquee {
   }
 }
 @media screen and (max-width: 500px) {
-  .copyright{
+  .copyright {
     padding-bottom: 100px;
   }
   .categoryGame {
