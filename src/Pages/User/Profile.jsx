@@ -6,6 +6,23 @@ import { set } from "react-hook-form";
 import userProfile from "../../assets/img/logo.png";
 import HeroSideBar from "../../components/User/HeroSidebar";
 const Profile = () => {
+  const [user, setUser] = useState();
+  const [userName, setUserName] = useState();
+  const [userPhone, setUserPhone] = useState();
+  const [userImage, setUserImage] = useState();
+  let auth = localStorage.getItem("authToken");
+  if (auth) {
+    useEffect(() => {
+      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+    }, []);
+  }
+
+  useEffect(() => {
+    setUserName(user?.name);
+    setUserPhone(user?.phone);
+  }, [user]);
+
+  console.log(userImage);
   return (
     <>
       <div className="container">
@@ -23,12 +40,23 @@ const Profile = () => {
                       alt="userprofile"
                     />
                     <p className="mt-3">
-                      Wallet: <span className="fw-500">K500,000</span>
+                      <i
+                        className="fas fa-wallet text-white"
+                        style={{ fontSize: "20px" }}
+                      ></i>
+                      <span className="fw-500 ms-2">
+                        K {parseFloat(user?.balance).toLocaleString()}
+                      </span>
                     </p>
                   </div>
 
                   <div class="mb-3">
-                    <input className="form-control" type="file" id="formFile" />
+                    <input
+                      className="form-control"
+                      type="file"
+                      id="formFile"
+                      onChange={(e) => setUserImage(e.target.files[0])}
+                    />
                   </div>
                   <div className="form-group mb-3">
                     <input
@@ -36,6 +64,8 @@ const Profile = () => {
                       className="form-control"
                       placeholder="အမည်"
                       name="name"
+                      value={userName}
+                      onChange={(e) => setUserName(e.target.value)}
                     />
                   </div>
 
@@ -45,6 +75,7 @@ const Profile = () => {
                       className="form-control"
                       placeholder="ဖုန်းနံပါတ်"
                       name="phone"
+                      value={userPhone}
                     />
                   </div>
 
