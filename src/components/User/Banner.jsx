@@ -30,7 +30,7 @@ const Banner = () => {
         return (
           <SwiperSlide key={banner}>
             <img
-              className="bannerImg  rounded-4 mt-3"
+              className="bannerImg rounded-4 mt-3"
               src={banner}
               alt={banner}
             />

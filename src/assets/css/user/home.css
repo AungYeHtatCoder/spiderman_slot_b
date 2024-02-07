@@ -42,9 +42,9 @@ marquee {
   padding-bottom: 120px;
 }
 .bannerImg {
-  height: 185px;
+  height: 250px;
   vertical-align: middle;
-  width: 98%;
+  width: 100%;
 }
 .hero {
   position: relative;
@@ -344,6 +344,7 @@ marquee {
     top: 0 !important;
     left: 0 !important;
     margin-left: 10px !important;
+
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-start !important;
@@ -500,11 +501,11 @@ marquee {
 }
 @media screen and (max-width: 540px) {
   .categoryImg {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 40px;
   }
   .categories {
-    gap: 10px !important;
+    gap: 20px !important;
   }
   .gameTabImg {
     max-height: 110px;
@@ -544,10 +545,11 @@ marquee {
     height: 60px !important;
   }
   .bannerImg {
-    height: 110px;
+    height: 220px;
     border-radius: 0 !important;
     width: 100%;
     object-fit: cover;
+    padding: 0px;
   }
   .homeFooter {
     border-top-right-radius: 15px;

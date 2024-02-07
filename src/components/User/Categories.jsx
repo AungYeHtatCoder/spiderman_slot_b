@@ -18,7 +18,7 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
 
   return (
     <>
-      <div className="categories gap-3 d-flex align-items-center justify-content-center">
+      <div className="categories gap-3 d-flex align-items-center justify-content-center mb-5">
         <div onClick={(e) => handleCategory("all", 6)} className="category">
           <img
             className="categoryImg"
@@ -49,7 +49,7 @@ const Categories = ({ activeCategory, setActiveCategory, link }) => {
                 src={game.img_url}
                 alt={game.description} // Add alt attribute for accessibility
               />
-              <p className="font-weight-bold">{game.description}</p>
+              <p className="font-weight-bold mt-2">{game.description}</p>
             </div>
           ))}
       </div>

@@ -46,7 +46,8 @@ export default function Wallet() {
   const { wallets, setWallets } = useAuthContext();
 
   const [user, setUser] = useState();
-  // console.log(user);
+  console.log(wallet);
+  console.log(user);
   useEffect(() => {
     setWallets(wallet);
   }, [wallet]);
@@ -187,7 +188,7 @@ export default function Wallet() {
                 <>
                   <div className="d-flex justify-content-between">
                     <span>WALLET</span>
-                    <span>K{parseFloat(user?.balance).toLocaleString()}</span>
+                    <span>K{parseFloat(wallet?.wallet).toLocaleString()}</span>
                   </div>
                   <div className="d-flex justify-content-between">
                     <span>ASIAGAMING</span>
