@@ -69,10 +69,7 @@ const ArcadeGames = (providers2) => {
         {play2.providers &&
           play2.providers.map((slotProvider, index) => {
             return (
-              <div
-                key={index}
-                className="col-md-4 col-lg-3 col-6 mb-4"
-              >
+              <div key={index} className="col-md-4 col-lg-3 col-6 mb-4">
                 {auth && (
                   <Link
                     className="text-decoration-none"
@@ -133,10 +130,7 @@ const ArcadeGames = (providers2) => {
         {play1.providers &&
           play1.providers.map((sportProvider, index) => {
             return (
-              <div
-                key={index}
-                className="col-md-4 col-lg-3 col-6 mb-4"
-              >
+              <div key={index} className="col-md-4 col-lg-3 col-6 mb-4">
                 {auth && (
                   <div
                     onClick={() => launchGame(sportProvider.id)}
@@ -186,10 +180,7 @@ const ArcadeGames = (providers2) => {
         {play.providers &&
           play.providers.map((liveProvider, index) => {
             return (
-              <div
-                key={index}
-                className="col-md-4 col-lg-3 col-6 mb-4"
-              >
+              <div key={index} className="col-md-4 col-lg-3 col-6 mb-4">
                 {auth && (
                   <div
                     onClick={() => launchGame(liveProvider.id)}

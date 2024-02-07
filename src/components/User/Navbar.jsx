@@ -6,6 +6,7 @@ import BASE_URL from "../../hooks/baseURL";
 import BtnSpinner from "../Auth/BtnSpinner";
 import useFetch from "../../hooks/useFetch";
 import { useAuthContext } from "../../contexts/AuthContext";
+import axios from "axios";
 
 const Navbar = () => {
   const { wallets, setWallets, authenticated, setAuthenticated } =
@@ -23,15 +24,26 @@ const Navbar = () => {
   let { data: wallet, loading, error } = useFetch(url);
 
   // console.log(wallet);
+
+  const getAuthUser = () => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .get(BASE_URL + "/user", { headers })
+      .then((response) => {
+        setUser(response.data.data);
+      })
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     setWallets(wallet);
   }, [wallet]);
 
-  if (auth) {
-    useEffect(() => {
-      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
-    }, []);
-  }
+  useEffect(() => {
+    getAuthUser();
+  }, [wallets]);
 
   const logOut = (e) => {
     e.preventDefault();
