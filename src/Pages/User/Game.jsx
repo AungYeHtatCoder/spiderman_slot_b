@@ -74,7 +74,7 @@ export default function Game() {
           {games &&
             games.map((game, index) => (
               <div
-                className="col-lg-2 col-md-3 col-6 mb-4 text-center"
+                className="col-lg-2 col-md-3 col-4 mb-4 text-center"
                 key={index}
               >
                 {auth && (
