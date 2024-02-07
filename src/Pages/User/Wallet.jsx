@@ -52,11 +52,11 @@ export default function Wallet() {
     setWallets(wallet);
   }, [wallet]);
 
-  useEffect(() => {
-    if (authenticated) {
-      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+  //   }
+  // }, []);
 
   // const { data: providers } = useFetch(url1);
 
@@ -68,8 +68,9 @@ export default function Wallet() {
   const [data, setData] = useState(null);
   const [loader, setLoader] = useState(false);
   const [banks, setBank] = useState();
+  const [authUsera, setAuthUser] = useState();
   // console.log(banks);
-  // console.log(amount);
+  console.log(authUsera);
   const getProvider = () => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -103,11 +104,27 @@ export default function Wallet() {
       .catch((e) => console.log(e));
   };
 
+  const getAuthUser = () => {
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .get(BASE_URL + "/user", { headers })
+      .then((response) => {
+        setUser(response.data.data);
+      })
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
     getList();
     getProvider();
     getBank();
   }, []);
+
+  useEffect(() => {
+    getAuthUser();
+  }, [wallet]);
 
   const deposite = (depositeData) => {
     // e.preventDefault();
@@ -188,7 +205,7 @@ export default function Wallet() {
                 <>
                   <div className="d-flex justify-content-between">
                     <span>WALLET</span>
-                    <span>K{parseFloat(wallet?.wallet).toLocaleString()}</span>
+                    <span>K{parseFloat(user?.balance).toLocaleString()}</span>
                   </div>
                   <div className="d-flex justify-content-between">
                     <span>ASIAGAMING</span>
