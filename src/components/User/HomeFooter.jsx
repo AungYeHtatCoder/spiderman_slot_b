@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 const HomeFooter = () => {
   const footer = [
+    { icon: <i className="fa-solid fa-bars"></i>, title: "Menu" },
     { icon: <i className="fa-solid fa-wallet"></i>, title: "Wallet" },
     { icon: <i className="fa-solid fa-lock"></i>, title: "Password" },
     { icon: <i className="fa-solid fa-bullhorn"></i>, title: "Promotion" },
-    { icon: <i className="fa-solid fa-bars"></i>, title: "Menu" },
   ];
   return (
     <div className="homeFooter d-flex d-lg-none justify-content-between align-items-center">
