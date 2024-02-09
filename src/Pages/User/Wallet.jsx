@@ -171,7 +171,7 @@ export default function Wallet() {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .post(BASE_URL + "/transaction/withdraw", formData, { headers })
+      .post(BASE_URL + "/transaction/withdraw", withdrawData, { headers })
       .then((response) => {
         if (response.status == 200) {
           let wallet = response.data;
@@ -334,10 +334,10 @@ export default function Wallet() {
                       </label>
                       <select
                         className={`form-label form-select ${
-                          errors2.user_bank_id && "border-2 border-danger"
+                          errors2.bank_id && "border-2 border-danger"
                         }`}
                         id="bank"
-                        {...register2("user_bank_id", {
+                        {...register2("bank_id", {
                           required: "Bank is Required.",
                         })}
                       >
@@ -350,7 +350,7 @@ export default function Wallet() {
                           ))}
                       </select>
                       <div className="error text-danger">
-                        {errors2.user_bank_id?.message}
+                        {errors2.bank_id?.message}
                       </div>
                     </div>
                   </div>
@@ -366,11 +366,53 @@ export default function Wallet() {
                           errors2.amount && "border-2 border-danger"
                         }`}
                         {...register2("amount", {
-                          required: "Bank is Required.",
+                          required: "Amount is Required.",
                         })}
                       />
                       <div className="error text-danger">
                         {errors2.amount?.message}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label htmlFor="acc_name" className="form-label">
+                        ဘဏ်အ‌ကောင့်အမည် ထည့်ပါ
+                      </label>
+                      <input
+                        type="text"
+                        id="acc_name"
+                        placeholder="ဘဏ်အ‌ကောင့်အမည် ထည့်ပါ"
+                        className={`form-control ${
+                          errors2.account_name && "border-2 border-danger"
+                        }`}
+                        {...register2("account_name", {
+                          required: "Account Name is Required.",
+                        })}
+                      />
+                      <div className="error text-danger">
+                        {errors2.account_name?.message}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="mb-3">
+                      <label htmlFor="acc_no" className="form-label">
+                        ဘဏ်အ‌ကောင့်နံပါတ် ထည့်ပါ
+                      </label>
+                      <input
+                        type="text"
+                        id="acc_no"
+                        placeholder="ဘဏ်အ‌ကောင့်နံပါတ် ထည့်ပါ"
+                        className={`form-control ${
+                          errors2.account_no && "border-2 border-danger"
+                        }`}
+                        {...register2("account_no", {
+                          required: "Account Number is Required.",
+                        })}
+                      />
+                      <div className="error text-danger">
+                        {errors2.account_no?.message}
                       </div>
                     </div>
                   </div>
