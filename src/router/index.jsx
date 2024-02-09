@@ -7,6 +7,7 @@ import Layout from "../layouts/Layout";
 import Promotion from "../Pages/User/Promotion";
 import ChangePassword from "../Pages/User/ChangePassword";
 import Profile from "../Pages/User/Profile";
+import GameHistory from "../Pages/User/GameHistory";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/games",
         element: <Game />,
+      },
+      {
+        path: "/gamesHistory",
+        element: <GameHistory />,
       },
       {
         path: "/wallet",
