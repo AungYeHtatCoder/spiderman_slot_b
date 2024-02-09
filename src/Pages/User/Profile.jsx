@@ -6,12 +6,20 @@ import { set } from "react-hook-form";
 import userProfile from "../../assets/img/logo.png";
 import HeroSideBar from "../../components/User/HeroSidebar";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 const Profile = () => {
   const { authenticated, setAuthenticated } = useAuthContext();
+
+  const form = useForm({
+    mode: "onTouched",
+  });
+  const { register, control, handleSubmit, formState } = form;
+  const { errors } = formState;
   const [user, setUser] = useState();
   const [userName, setUserName] = useState();
   const [userPhone, setUserPhone] = useState();
-  const [userImage, setUserImage] = useState();
+  const [userImage, setUserImage] = useState([]);
   let auth = localStorage.getItem("authToken");
   const navigate = useNavigate();
 
@@ -25,13 +33,35 @@ const Profile = () => {
     }, []);
   }
 
+  const updateProfile = (e) => {
+    e.preventDefault();
+    // console.log(userImage);
+
+    const profileData = {
+      profile: userImage.name,
+      phone: userPhone,
+    };
+
+    console.log(profileData);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .post(BASE_URL + "/profile", profileData, { headers })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+  };
+
   useEffect(() => {
     setUserName(user?.name);
     setUserPhone(user?.phone);
-    setUserImage(user?.profile);
+    // setUserImage(user?.profile);
   }, [user]);
 
-  console.log(userImage);
   return (
     <>
       {auth && (
@@ -40,7 +70,7 @@ const Profile = () => {
             <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3">
               <div style={{ paddingBottom: 200 }} className="pt-2">
                 <div className="container">
-                  <form>
+                  <form onSubmit={updateProfile}>
                     <div className="text-center mb-4">
                       <img
                         src={userProfile}
@@ -75,7 +105,6 @@ const Profile = () => {
                         placeholder="အမည်"
                         name="name"
                         value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
                       />
                     </div>
 
@@ -86,6 +115,7 @@ const Profile = () => {
                         placeholder="ဖုန်းနံပါတ်"
                         name="phone"
                         value={userPhone}
+                        onChange={(e) => setUserPhone(e.target.value)}
                       />
                     </div>
 
