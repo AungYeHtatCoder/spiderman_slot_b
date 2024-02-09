@@ -6,6 +6,7 @@ const HomeFooter = () => {
     { icon: <i className="fa-solid fa-wallet"></i>, title: "Wallet" },
     { icon: <i className="fa-solid fa-lock"></i>, title: "Password" },
     { icon: <i className="fa-solid fa-bullhorn"></i>, title: "Promotion" },
+    { icon: <i class="fa-solid fa-gamepad"></i>, title: "Game History" },
     { icon: <i className="fa-solid fa-bars"></i>, title: "Menu" },
   ];
   return (
@@ -20,6 +21,8 @@ const HomeFooter = () => {
                 ? "/"
                 : item.title == "Promotion"
                 ? "/promotion"
+                : item.title == "Game History"
+                ? "/gamesHistory"
                 : "/change-password"
             }
             key={item.title}
