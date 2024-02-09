@@ -19,7 +19,7 @@ const Profile = () => {
   const [user, setUser] = useState();
   const [userName, setUserName] = useState();
   const [userPhone, setUserPhone] = useState();
-  const [userImage, setUserImage] = useState([]);
+  const [userImage, setUserImage] = useState();
   let auth = localStorage.getItem("authToken");
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const Profile = () => {
     // console.log(userImage);
 
     const profileData = {
-      profile: userImage.name,
+      profile: userImage,
       phone: userPhone,
     };
 
