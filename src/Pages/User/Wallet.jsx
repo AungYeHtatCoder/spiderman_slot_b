@@ -25,6 +25,7 @@ export default function Wallet() {
     mode: "onTouched",
   });
   const form2 = useForm();
+  const form3 = useForm();
   const {
     register,
     control,
@@ -39,6 +40,14 @@ export default function Wallet() {
     formState: { errors: errors2 },
     reset: reset2,
   } = form2;
+
+  const {
+    register: register3,
+    control: control3,
+    handleSubmit: handleSubmit3,
+    formState: { errors: errors3 },
+    reset: reset3,
+  } = form3;
 
   const [wallet, setWallet] = useState(null);
   const [providers, setProviders] = useState(null);
@@ -69,6 +78,8 @@ export default function Wallet() {
   const [loader, setLoader] = useState(false);
   const [banks, setBank] = useState();
   const [authUsera, setAuthUser] = useState();
+  const [isDeposite, setIsDeposite] = useState(null);
+  const [transferLogs, setTransferLogs] = useState();
   // console.log(banks);
   console.log(authUsera);
   const getProvider = () => {
@@ -128,7 +139,7 @@ export default function Wallet() {
 
   const deposite = (depositeData) => {
     // e.preventDefault();
-    console.log(depositeData);
+    // console.log(depositeData);
     const formData = { p_code: provider, cash_in: amount };
     // console.log(formData);
     setLoader(true);
@@ -163,7 +174,7 @@ export default function Wallet() {
   };
 
   const withdraw = (withdrawData) => {
-    console.log(withdrawData);
+    // console.log(withdrawData);
     // e.preventDefault();
     const formData = { user_bank_id: bank, amount: withdrawAmount };
 
@@ -190,6 +201,45 @@ export default function Wallet() {
             theme: "light",
           });
         }
+      });
+  };
+  console.log(transferLogs);
+  const transferLog = (transferLogData) => {
+    console.log(transferLogData);
+
+    transferLogData.type == "deposite"
+      ? setIsDeposite(true)
+      : setIsDeposite(false);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .get(
+        BASE_URL +
+          `/transaction/player-transactionlog?type=${transferLogData.type}fromDate=${transferLogData.fromDate}&toDate=${transferLogData.toDate}`,
+        { headers }
+      )
+      .then((response) => {
+        console.log(response);
+
+        setTransferLogs(response.data.data);
+        // if (response.status == 200) {
+        //   let wallet = response.data;
+        //   getList();
+        //   setLoader(false);
+        //   setAmount("");
+        //   setInputBank("");
+        //   toast.success("Withdraw Successfully", {
+        //     position: "top-right",
+        //     autoClose: 2000,
+        //     hideProgressBar: false,
+        //     closeOnClick: false,
+        //     pauseOnHover: false,
+        //     draggable: true,
+        //     progress: undefined,
+        //     theme: "light",
+        //   });
+        // }
       });
   };
 
@@ -323,7 +373,7 @@ export default function Wallet() {
                 </div>
               </form>
             </div>
-            <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
+            <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow mb-4">
               <h5 className="mb-4">Withdraw (ငွေထုတ်ရန်)</h5>
               <form onSubmit={handleSubmit2(withdraw)}>
                 <div className="row">
@@ -421,6 +471,105 @@ export default function Wallet() {
                   <button className="btn btn-red">ငွေထုတ်မည်</button>
                 </div>
               </form>
+            </div>
+            <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
+              <h5 className="mb-4">
+                Transfer History (ငွေလွဲငွေ‌ထုတ်မှတ်တမ်း)
+              </h5>
+              <form onSubmit={handleSubmit3(transferLog)}>
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="mb-3">
+                      <label htmlFor="p_code" className="form-label">
+                        အမျိုးအစား ရွေးချယ်ပါ
+                      </label>
+                      <select
+                        className={`form-label form-select ${
+                          errors3.type && "border-2 border-danger"
+                        }`}
+                        id="type"
+                        {...register3("type", {
+                          required: "Type is Required.",
+                        })}
+                      >
+                        <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
+                        <option value="deposite">Depoiste</option>
+                        <option value="withdraw">Withdraw</option>
+                      </select>
+                      <div className="error text-danger">
+                        {errors3.type?.message}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="mb-3">
+                      <label htmlFor="amount" className="form-label">
+                        မှ
+                      </label>
+                      <input
+                        type="date"
+                        placeholder="ငွေပမာဏ ထည့်ပါ"
+                        className={`form-control ${
+                          errors3.fromDate && "border-2 border-danger"
+                        }`}
+                        {...register3("fromDate", {
+                          required: "fromDate is Required.",
+                        })}
+                      />
+                      <div className="error text-danger">
+                        {errors3.fromDate?.message}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
+                    <div className="mb-3">
+                      <label htmlFor="acc_name" className="form-label">
+                        သို့
+                      </label>
+                      <input
+                        type="date"
+                        id="toDate"
+                        placeholder="ဘဏ်အ‌ကောင့်အမည် ထည့်ပါ"
+                        className={`form-control ${
+                          errors2.toDate && "border-2 border-danger"
+                        }`}
+                        {...register3("toDate", {
+                          required: "toDate  is Required.",
+                        })}
+                      />
+                      <div className="error text-danger">
+                        {errors3.toDate?.message}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-end">
+                  <button className="btn btn-red">တင်သွင်းမည်</button>
+                </div>
+              </form>
+              {transferLogs && (
+                <table className="table table-borderless mt-3">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">
+                        {isDeposite ? "Depsite" : "Withdraw"} Amount
+                      </th>
+                      <th scope="col">Transaction time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transferLogs &&
+                      transferLogs.map((transferLog, index) => (
+                        <tr key={index} className="p-2">
+                          <th>{transferLog.id}</th>
+                          <td>{transferLog.amount}</td>
+                          <td>{transferLog.created_at}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
