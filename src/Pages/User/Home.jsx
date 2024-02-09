@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
       <div className="hero">
-        Hello
         <Banner />
         <HeroSideBar />
       </div>

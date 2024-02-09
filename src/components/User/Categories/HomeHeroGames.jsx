@@ -178,7 +178,7 @@ const HomeHeroGames = () => {
                         src={game.img_url}
                         alt={game.name_en}
                         className="img-fluid rounded shadow"
-                        style={{ width: "100%", height: "200px" }}
+                        style={{ width: "100%", height: "150px"}}
                       />
                     </div>
                   )}
