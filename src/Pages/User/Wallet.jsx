@@ -221,7 +221,7 @@ export default function Wallet() {
   return (
     <>
       <ToastContainer />
-      <div className="container-fluid my-5">
+      <div className="container-fluid my-5 pb-5">
         <h3 className="text-center mb-4">My Wallet</h3>
         <div className="row">
           <div className="col-md-3">
