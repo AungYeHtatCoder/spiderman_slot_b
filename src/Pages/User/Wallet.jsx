@@ -55,8 +55,7 @@ export default function Wallet() {
   const { wallets, setWallets } = useAuthContext();
 
   const [user, setUser] = useState();
-  console.log(wallet);
-  console.log(user);
+
   useEffect(() => {
     setWallets(wallet);
   }, [wallet]);
@@ -80,8 +79,7 @@ export default function Wallet() {
   const [authUsera, setAuthUser] = useState();
   const [isDeposite, setIsDeposite] = useState(null);
   const [transferLogs, setTransferLogs] = useState();
-  // console.log(banks);
-  console.log(authUsera);
+
   const getProvider = () => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -138,10 +136,8 @@ export default function Wallet() {
   }, [wallet]);
 
   const deposite = (depositeData) => {
-    // e.preventDefault();
-    // console.log(depositeData);
     const formData = { p_code: provider, cash_in: amount };
-    // console.log(formData);
+
     setLoader(true);
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -154,8 +150,7 @@ export default function Wallet() {
           getList();
           setLoader(false);
           reset();
-          // localStorage.removeItem("wallet");
-          // localStorage.setItem("wallet", JSON.stringify(wallet));
+
           toast.success("Deposite Successfully", {
             position: "top-right",
             autoClose: 2000,
@@ -174,8 +169,6 @@ export default function Wallet() {
   };
 
   const withdraw = (withdrawData) => {
-    // console.log(withdrawData);
-    // e.preventDefault();
     const formData = { user_bank_id: bank, amount: withdrawAmount };
 
     const headers = {
@@ -188,8 +181,7 @@ export default function Wallet() {
           let wallet = response.data;
           getList();
           setLoader(false);
-          setAmount("");
-          setInputBank("");
+          reset2();
           toast.success("Withdraw Successfully", {
             position: "top-right",
             autoClose: 2000,
@@ -203,11 +195,11 @@ export default function Wallet() {
         }
       });
   };
-  console.log(transferLogs);
+
   const transferLog = (transferLogData) => {
     console.log(transferLogData);
 
-    transferLogData.type == "deposite"
+    transferLogData.type == "deposit"
       ? setIsDeposite(true)
       : setIsDeposite(false);
     const headers = {
@@ -216,30 +208,13 @@ export default function Wallet() {
     axios
       .get(
         BASE_URL +
-          `/transaction/player-transactionlog?type=${transferLogData.type}fromDate=${transferLogData.fromDate}&toDate=${transferLogData.toDate}`,
+          `/transaction/player-transactionlog?type=${transferLogData.type}&fromDate=${transferLogData.fromDate}&toDate=${transferLogData.toDate}`,
         { headers }
       )
       .then((response) => {
         console.log(response);
 
         setTransferLogs(response.data.data);
-        // if (response.status == 200) {
-        //   let wallet = response.data;
-        //   getList();
-        //   setLoader(false);
-        //   setAmount("");
-        //   setInputBank("");
-        //   toast.success("Withdraw Successfully", {
-        //     position: "top-right",
-        //     autoClose: 2000,
-        //     hideProgressBar: false,
-        //     closeOnClick: false,
-        //     pauseOnHover: false,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "light",
-        //   });
-        // }
       });
   };
 
@@ -493,7 +468,7 @@ export default function Wallet() {
                         })}
                       >
                         <option value="">ကျေးဇူးပြု၍ ရွေးချယ်ပါ</option>
-                        <option value="deposite">Depoiste</option>
+                        <option value="deposit">Deposit</option>
                         <option value="withdraw">Withdraw</option>
                       </select>
                       <div className="error text-danger">

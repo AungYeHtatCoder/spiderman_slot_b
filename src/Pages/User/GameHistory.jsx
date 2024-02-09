@@ -128,12 +128,12 @@ export default function GameHistory() {
         console.log(error.response);
       });
   };
-
+  console.log(gameHistory);
   return (
     <>
       <ToastContainer />
       <div className="container-fluid my-5">
-        <h3 className="text-center mb-4">Game Log</h3>
+        <h3 className="text-center mb-4">Game History</h3>
         <div className="row">
           <div className="col-md-9 col-sm-6 mx-auto">
             <div className="bg-transparent border border-1 py-3 px-3 rounded-3 shadow">
@@ -191,6 +191,7 @@ export default function GameHistory() {
                   <thead>
                     <tr>
                       <th scope="col">Game</th>
+                      <th scope="col">Total Bet</th>
                       <th scope="col">Winlose</th>
                     </tr>
                   </thead>
@@ -198,8 +199,9 @@ export default function GameHistory() {
                     {gameHistory &&
                       gameHistory.map((history, index) => (
                         <tr key={index} className="p-2">
-                          <th>{history.id}</th>
-                          <td>{history.win}</td>
+                          <th>{history.game_name}</th>
+                          <th>{history.total_bet}</th>
+                          <td>{history.winlose}</td>
                         </tr>
                       ))}
                   </tbody>
