@@ -499,7 +499,7 @@ export default function Wallet() {
                   <div className="col-md-4">
                     <div className="mb-3">
                       <label htmlFor="acc_name" className="form-label">
-                        သို့
+                        ထိ
                       </label>
                       <input
                         type="date"
