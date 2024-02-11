@@ -110,6 +110,9 @@ const Navbar = () => {
                   className="fas fa-wallet text-white"
                   style={{ fontSize: "20px" }}
                 ></i>
+                <span className="text-white ms-2">
+                  K{parseFloat(user?.balance).toLocaleString()}
+                </span>
               </a>
               <ul className="dropdown-menu" style={{ width: "200px" }}>
                 {wallets && (

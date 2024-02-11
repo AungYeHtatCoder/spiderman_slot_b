@@ -19,7 +19,7 @@ const Profile = () => {
   const [user, setUser] = useState();
   const [userName, setUserName] = useState();
   const [userPhone, setUserPhone] = useState();
-  const [userImage, setUserImage] = useState();
+  const [userImage, setUserImage] = useState(null);
   let auth = localStorage.getItem("authToken");
   const navigate = useNavigate();
 
@@ -59,7 +59,7 @@ const Profile = () => {
   useEffect(() => {
     setUserName(user?.name);
     setUserPhone(user?.phone);
-    // setUserImage(user?.profile);
+    setUserImage(user.profile);
   }, [user]);
 
   return (
