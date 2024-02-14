@@ -20,6 +20,7 @@ const Profile = () => {
   const [userName, setUserName] = useState();
   const [userPhone, setUserPhone] = useState();
   const [userImage, setUserImage] = useState(null);
+  const [userImg, setUserImg] = useState({});
   let auth = localStorage.getItem("authToken");
   const navigate = useNavigate();
 
@@ -27,40 +28,62 @@ const Profile = () => {
     navigate("/login");
   }
 
-  if (auth) {
-    useEffect(() => {
-      setUser(JSON.parse(localStorage.getItem("authUser")).userData);
-    }, []);
-  }
+  // if (auth) {
+  //   useEffect(() => {
+  //     setUser(JSON.parse(localStorage.getItem("authUser")).userData);
+  //   }, []);
+  // }
 
-  const updateProfile = (e) => {
-    e.preventDefault();
-    // console.log(userImage);
-
-    const profileData = {
-      profile: userImage,
-      phone: userPhone,
-    };
-
-    console.log(profileData);
+  const getAuthUser = () => {
     const headers = {
       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
     };
     axios
-      .post(BASE_URL + "/profile", profileData, { headers })
+      .get(BASE_URL + "/user", { headers })
+      .then((response) => {
+        console.log(response.data.data);
+        setUser(response.data.data);
+      })
+      .catch((e) => console.log(e));
+  };
+
+  useEffect(() => {
+    getAuthUser();
+  }, []);
+
+  console.log(user);
+  useEffect(() => {
+    setUserName(user?.name);
+    setUserPhone(user?.phone);
+    setUserImage(
+      `https://www.spidermanmm.com/assets/img/player_profile/` + user?.profile
+    );
+  }, [user]);
+
+  const updateProfile = (e) => {
+    e.preventDefault();
+
+    if (!userImg.type.startsWith("image/")) {
+      console.error("Selected file is not an image.");
+      return;
+    }
+    console.log(userImage?.name);
+    const formData = new FormData();
+    formData.append("profile", userImg); // Append the file to FormData
+    formData.append("phone", userPhone);
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+    axios
+      .post(BASE_URL + "/profile", formData, { headers })
       .then((response) => {
         console.log(response);
+        setUserImage(response.data.data.profile);
       })
       .catch((error) => {
         console.log(error.response);
       });
   };
-
-  useEffect(() => {
-    setUserName(user?.name);
-    setUserPhone(user?.phone);
-    setUserImage(user.profile);
-  }, [user]);
 
   return (
     <>
@@ -73,7 +96,7 @@ const Profile = () => {
                   <form onSubmit={updateProfile}>
                     <div className="text-center mb-4">
                       <img
-                        src={userProfile}
+                        src={userImage}
                         width="auto"
                         height="80px"
                         className="rounded-circle mx-auto"
@@ -95,7 +118,7 @@ const Profile = () => {
                         className="form-control"
                         type="file"
                         id="formFile"
-                        onChange={(e) => setUserImage(e.target.files[0])}
+                        onChange={(e) => setUserImg(e.target.files[0])}
                       />
                     </div>
                     <div className="form-group mb-3">

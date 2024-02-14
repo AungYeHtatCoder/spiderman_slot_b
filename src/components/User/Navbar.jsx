@@ -223,12 +223,10 @@ const Navbar = () => {
               to="/profile"
               className="text-decoration-none text-white me-4"
             >
-              {user && !user.profile && (
-                <i
-                  className="fa-regular fa-user-circle"
-                  style={{ fontSize: "20px" }}
-                ></i>
-              )}
+              <i
+                className="fa-regular fa-user-circle"
+                style={{ fontSize: "20px" }}
+              ></i>
             </Link>
             <button className="loginBtn" onClick={logOut}>
               {smallLoad && <BtnSpinner />}
